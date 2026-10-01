@@ -5,70 +5,59 @@ import tseslint from 'typescript-eslint';
 // Dependency rule (design D5): domain imports nothing; application imports domain;
 // ui imports application and domain; infrastructure imports application and domain;
 // app imports all. Built-in rules only, no plugin.
-const forbid = (message, ...group) => ({ group, message });
+//
+// Layer patterns are anchored to the project's own layers so that a nested folder that
+// happens to share a layer name (for example `src/domain/ui/`) is not caught by accident:
+//   - alias form:    `@/<layer>` and anything below it
+//   - relative form: one or more leading `../` followed directly by `<layer>`
+// A `./<layer>` import points at a folder inside the importing layer, never at another layer.
+const layer = (name) => `^(@/|(\\.\\./)+)${name}(/|$)`;
+const forbid = (message, ...regexes) => regexes.map((regex) => ({ regex, message }));
 
 const domainPatterns = [
-  forbid(
+  ...forbid(
     'domain is pure: it must not import other layers.',
-    '@/application/**',
-    '@/infrastructure/**',
-    '@/ui/**',
-    '@/app/**',
-    '**/application/**',
-    '**/infrastructure/**',
-    '**/ui/**',
-    '**/app/**',
+    layer('application'),
+    layer('infrastructure'),
+    layer('ui'),
+    layer('app'),
   ),
+  // Subpaths such as `react/jsx-runtime` and `react-dom/client` are React too.
+  {
+    group: ['react/**', 'react-dom/**'],
+    message: 'domain must not depend on React.',
+  },
 ];
 
-const applicationPatterns = [
-  forbid(
-    'application may import domain only.',
-    '@/infrastructure/**',
-    '@/ui/**',
-    '@/app/**',
-    '**/infrastructure/**',
-    '**/ui/**',
-    '**/app/**',
-  ),
-];
+const applicationPatterns = forbid(
+  'application may import domain only.',
+  layer('infrastructure'),
+  layer('ui'),
+  layer('app'),
+);
 
-const infrastructurePatterns = [
-  forbid(
-    'infrastructure must not import ui or app.',
-    '@/ui/**',
-    '@/app/**',
-    '**/ui/**',
-    '**/app/**',
-  ),
-];
+const infrastructurePatterns = forbid(
+  'infrastructure must not import ui or app.',
+  layer('ui'),
+  layer('app'),
+);
 
-const uiPatterns = [
-  forbid(
-    'ui must not import infrastructure or app.',
-    '@/infrastructure/**',
-    '@/app/**',
-    '**/infrastructure/**',
-    '**/app/**',
-  ),
-];
+const uiPatterns = forbid(
+  'ui must not import infrastructure or app.',
+  layer('infrastructure'),
+  layer('app'),
+);
 
 // Presentational tiers read props and the i18n Context only (design D5).
 const presentationalPatterns = [
   ...uiPatterns,
-  forbid(
+  ...forbid(
     'presentational tiers must not import ui/containers.',
-    '@/ui/containers/**',
-    '**/containers/**',
+    '^(@/ui/|(\\.\\./)+(ui/)?)containers(/|$)',
   ),
-  forbid(
+  ...forbid(
     'presentational tiers must not import application context or provider modules.',
-    '@/application/**/*Provider*',
-    '@/application/**/*Context*',
-    '@/application/**/use*',
-    '**/application/**/*Provider*',
-    '**/application/**/*Context*',
-    '**/application/**/use*',
+    '^(@/|(\\.\\./)+)application/(.*/)?([^/]*(Provider|Context)[^/]*|use[^/]*)(/|$)',
   ),
 ];
 
@@ -80,6 +69,17 @@ const reactPaths = [
   { name: 'react', message: 'domain must not depend on React.' },
   { name: 'react-dom', message: 'domain must not depend on React.' },
 ];
+
+// `no-restricted-imports` only sees static imports; a dynamic `import()` would bypass it.
+const noDynamicImport = {
+  'no-restricted-syntax': [
+    'error',
+    {
+      selector: 'ImportExpression',
+      message: 'domain must not use dynamic import(): it would bypass the layer rules.',
+    },
+  ],
+};
 
 const noMathRandom = {
   'no-restricted-properties': [
@@ -102,7 +102,7 @@ export default tseslint.config(
   },
   {
     files: ['src/domain/**/*.{ts,tsx}'],
-    rules: { ...restrictImports(domainPatterns, reactPaths), ...noMathRandom },
+    rules: { ...restrictImports(domainPatterns, reactPaths), ...noDynamicImport, ...noMathRandom },
   },
   {
     files: ['src/application/**/*.{ts,tsx}'],
