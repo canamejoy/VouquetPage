@@ -116,3 +116,11 @@ Total tests: 57 passing (37 before, 20 new).
 - Wrapping id `blush` and colour id `blush` share a string but live in separate dictionary namespaces (`catalog.blush` versus `color.blush`); no clash in code since `ColorId` and `WrappingId` are distinct types. Slice 11 must not flatten them.
 - Catalog items carry no name or illustration field (names come from `catalog.<id>` keys, illustrations from the slice 15 registry), per D3.
 - Prices are sample data authored in whole COP (comment in `data.ts`); COP base currency still awaits user confirmation (U5).
+
+## Batch 4: Group 4, slice 4 "Bouquet operations" (tasks 4.1 to 4.6)
+
+Split a/b (whole slice about 640 lines). 4a: `feat/bouquet-editor-04a-core-operations` (base `feat/bouquet-editor-03-catalog`), 338 lines, types, limits, ids, add, transform, recolor, delete. 4b: `feat/bouquet-editor-04-bouquet-ops` (base 4a), duplicate, reorder, wrapping, clear, quantities, ADR 0002, this record. PR numbers in the PR bodies. 6/6 tasks of Group 4 complete (Groups 5 to 27 pending). Tests: 100 passing (57 before, 43 new).
+
+- RED per pair observed: 4a import of `./add` unresolved (no tests ran); 4b 14 of 38 failed (`duplicateElement`/`reorderElement` not a function) plus `./quantities` unresolved. GREEN: 24/24 then 43/43 in `src/domain/bouquet`.
+- Deviations: `clamp` now exported from `domain/geometry/index.ts`; `Point` imported from geometry, not redeclared; `addElement(bouquet, catalogId, position, catalog?)` takes only flower or foliage ids; no-ops return the same reference; added `elementQuantities`, `ReorderDirection`, `DUPLICATE_OFFSET`.
+- Rollback: `src/domain/bouquet` and `docs/adr/0002-bouquet-model.md`.
