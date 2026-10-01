@@ -7,3 +7,5 @@ export const BASE = { fill: 'currentColor' } as const;
 export const SHADE = { fill: '#000', fillOpacity: 0.3 } as const;
 export const DEEP = { fill: '#000', fillOpacity: 0.6 } as const;
 export const LIGHT = { fill: '#fff', fillOpacity: 0.35 } as const;
+/** Faint shade for soft depth on petal areas; readable on white without looking like a line. */
+export const SOFT = { fill: '#000', fillOpacity: 0.14 } as const;

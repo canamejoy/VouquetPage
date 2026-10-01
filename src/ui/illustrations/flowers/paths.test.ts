@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { blobs, petalRing, scallop, serrated } from './paths';
+import { blobs, fringedRing, petalRing, ruffle, scallop, serrated } from './paths';
 
 const subpaths = (d: string) => d.split('Z').filter((s) => s.trim() !== '');
 const points = (d: string) => (d.match(/-?\d*\.?\d+/g) ?? []).map(Number);
@@ -59,5 +59,39 @@ describe('path builders', () => {
   it('scallop lobes bulge beyond the base radius', () => {
     const p = points(scallop(4, 30, 10));
     expect(Math.hypot(p[2] ?? 0, p[3] ?? 0)).toBeCloseTo(40, 0);
+  });
+});
+
+describe('irregular builders', () => {
+  const maxRadius = (d: string) => {
+    const p = points(d);
+    let max = 0;
+    for (let i = 0; i < p.length; i += 2) max = Math.max(max, Math.hypot(p[i] ?? 0, p[i + 1] ?? 0));
+    return max;
+  };
+
+  it('ruffle is one closed outline with uneven lobes inside its bound', () => {
+    const d = ruffle(8, 40, 10);
+    expect(subpaths(d)).toHaveLength(1);
+    expect(d).not.toMatch(/[a-z]/);
+    expect(maxRadius(d)).toBeLessThanOrEqual(40 + 10 * 1.5 + 0.1);
+    const p = points(d);
+    const controls = new Set<number>();
+    for (let i = 2; i < p.length - 2; i += 4)
+      controls.add(Math.round(Math.hypot(p[i] ?? 0, p[i + 1] ?? 0)));
+    expect(controls.size).toBeGreaterThan(2); // a regular scallop has one control radius
+    expect(ruffle(8, 40, 10)).toBe(d);
+  });
+
+  it('fringedRing draws one fringed petal per count with varied tooth depth', () => {
+    const d = fringedRing(6, 4, 60, 28, 0, 4);
+    expect(subpaths(d)).toHaveLength(6);
+    expect(d).not.toMatch(/[a-z]/);
+    expect(maxRadius(d)).toBeLessThanOrEqual(60.1);
+    const first = (subpaths(d)[0] ?? '').split('L').slice(1, -1);
+    const radii = new Set(
+      first.map((s) => Math.round(Math.hypot(...(points(s) as [number, number])))),
+    );
+    expect(radii.size).toBeGreaterThan(3);
   });
 });

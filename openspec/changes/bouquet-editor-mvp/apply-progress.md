@@ -201,3 +201,5 @@ Split a/b. 13a: `feat/bouquet-editor-13a-flower-paths` (base `feat/bouquet-edito
 - RED: `flowers.test.tsx` failed on an unresolved registry import (no tests ran); `paths.test.ts` was written after `paths.ts` (builders were extracted from the first drawing), so it has no observed RED. GREEN: 25/25 and 5/5.
 - Drawn art was rasterized with a throwaway resvg script (not committed) and looked at; recolour technique is `currentColor` plus black/white translucent overlays (`flowers/paint.ts`). Registry: `flowerIllustrations: Record<FlowerId, ComponentType>`.
 - Rollback 13b: `src/ui/illustrations/flowers*`, ADR 0003.
+
+Refinement 13c (`feat/bouquet-editor-13c-flower-refine`, base 13): rose, peony, carnation and lily redrawn after art review (distinct overlapping petals, soft per-petal shading instead of dark rims). New builders `ruffle` and `fringedRing` (RED observed: `not a function`); carnation shape bound raised to 14. Tests: 484 passing.

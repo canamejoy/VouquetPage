@@ -20,7 +20,7 @@ not a generic flower shop, so the art is part of the deliverable. No third-party
   highlight in `flowers/paint.ts`), so one hex drives the whole flower and white keeps its structure.
   Fixed-colour flowers (sunflower, lavender) hard-code their own hex fills.
 - Repeated petals come from small pure path builders (`flowers/paths.ts`) that emit absolute
-  commands and one path per ring, which keeps each flower near 12 shapes and its extent checkable.
+  commands and one path per ring, which keeps each flower near 12 shapes and its extent checkable. `ruffle` (uneven lobes, peony) and `fringedRing` (petals with a fringed edge, carnation) are deterministic, so the art never changes between renders. The carnation uses 13 shapes (test bound 14) because recognizing it needs three fringed tiers plus shading; D3 says "about 12".
 - The art is agent-authored. Replacing a flower means replacing its component and registry entry;
   nothing else changes.
 
@@ -33,4 +33,5 @@ raster or third-party packs (not recolourable, licence review).
 
 - No dependency and no asset pipeline; tests can check structure, colour mechanism and bounds,
   but not beauty. Visual quality needs a human look in the browser.
+- Each petal tier is shaded darker at its base and lighter at its edge instead of outlined, so petals read as overlapping volumes; the faint `SOFT` shade keeps white flowers readable.
 - Overlay shading is uniform across colours, so very dark colours (burgundy) show less depth.

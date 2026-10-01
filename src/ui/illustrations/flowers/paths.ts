@@ -69,3 +69,55 @@ export function blobs(centers: readonly Pt[], rx: number, ry: number): string {
     })
     .join(' ');
 }
+
+/** Deterministic pseudo-random value in [0, 1): the same input always draws the same flower. */
+const jitter = (i: number) => (i * 0.618034) % 1;
+
+/**
+ * Like `scallop`, but with uneven lobes: each vertex sits a little inside `radius` and each
+ * lobe bulges between 0.5 and 1.5 times `bulge`. Used for dense, ruffled petal masses.
+ */
+export function ruffle(count: number, radius: number, bulge: number, offset = 0): string {
+  const step = 360 / count;
+  const vertex = (i: number) =>
+    polar(radius * (1 - 0.12 * jitter(i + 3)), offset + step * (i % count));
+  const lobes = steps(count).map((i) => {
+    const reach = radius + bulge * (0.5 + jitter(i * 2 + 1));
+    return `Q${xy(polar(reach, offset + step * (i + 0.5)))} ${xy(vertex(i + 1))}`;
+  });
+  return `M${xy(vertex(0))} ${lobes.join(' ')} Z`;
+}
+
+/**
+ * A ring of fan-shaped petals whose outer edge is a fringe of `teeth` + 1 teeth of uneven
+ * depth, so the serration belongs to each petal rather than to a ring outline.
+ */
+export function fringedRing(
+  count: number,
+  inner: number,
+  outer: number,
+  halfWidth: number,
+  offset = 0,
+  teeth = 4,
+): string {
+  const depth = (outer - inner) * 0.18;
+  return steps(count)
+    .map((i) => {
+      const a = offset + (360 * i) / count;
+      const angleAt = (k: number) => a - halfWidth + (2 * halfWidth * k) / teeth;
+      const edge = steps(teeth + 1).map((k) => {
+        const tip = xy(polar(outer - depth * 0.5 * jitter(i * 7 + k), angleAt(k)));
+        if (k === teeth) return `L${tip}`;
+        const valley = xy(
+          polar(
+            outer - depth * (0.6 + 0.4 * jitter(i * 7 + k + 11)),
+            (angleAt(k) + angleAt(k + 1)) / 2,
+          ),
+        );
+        return `L${tip} L${valley}`;
+      });
+      const base = xy(polar(inner, a));
+      return `M${base} ${edge.join(' ')} L${base} Z`;
+    })
+    .join(' ');
+}
