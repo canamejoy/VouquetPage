@@ -1,6 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
+import type { WrappingId } from '@/domain/catalog';
 import { CATALOG } from '@/domain/catalog';
 import { COMPOSITIONS } from '@/domain/composition';
 import { I18nContext } from '@/ui/i18n/I18nContext';
@@ -13,11 +14,18 @@ interface Options {
   language?: Language;
   hasArrangement?: boolean;
   canAdd?: boolean;
+  wrappingId?: WrappingId | null;
 }
 
-function setup({ language = 'en', hasArrangement = false, canAdd = true }: Options = {}) {
+function setup({
+  language = 'en',
+  hasArrangement = false,
+  canAdd = true,
+  wrappingId = null,
+}: Options = {}) {
   const handlers = {
     onAdd: vi.fn(),
+    onSelectWrapping: vi.fn(),
     onApplyComposition: vi.fn(),
   };
   render(
@@ -25,6 +33,7 @@ function setup({ language = 'en', hasArrangement = false, canAdd = true }: Optio
       <Palette
         catalog={CATALOG}
         compositionIds={compositionIds}
+        wrappingId={wrappingId}
         hasArrangement={hasArrangement}
         canAdd={canAdd}
         {...handlers}
@@ -44,6 +53,7 @@ describe('Palette tabs', () => {
       'Compositions',
       'Flowers',
       'Foliage',
+      'Wrapping',
     ]);
     expect(tab('Compositions')).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('tabpanel', { name: 'Compositions' })).toBeInTheDocument();
@@ -64,11 +74,11 @@ describe('Palette tabs', () => {
     expect(tab('Flowers')).toHaveAttribute('aria-selected', 'true');
     expect(tab('Compositions')).toHaveAttribute('tabindex', '-1');
     await userEvent.keyboard('{End}');
-    expect(tab('Foliage')).toHaveFocus();
+    expect(tab('Wrapping')).toHaveFocus();
     await userEvent.keyboard('{ArrowRight}');
     expect(tab('Compositions')).toHaveFocus();
     await userEvent.keyboard('{ArrowLeft}');
-    expect(tab('Foliage')).toHaveFocus();
+    expect(tab('Wrapping')).toHaveFocus();
     await userEvent.keyboard('{Home}');
     expect(tab('Compositions')).toHaveFocus();
   });
@@ -77,8 +87,8 @@ describe('Palette tabs', () => {
     setup({ language: 'es', hasArrangement: true });
     expect(screen.getByRole('tab', { name: 'Flores' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Rosa' })).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('tab', { name: 'Follaje' }));
-    expect(screen.getByRole('button', { name: 'Helecho' })).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('tab', { name: 'Envoltura' }));
+    expect(screen.getByRole('button', { name: 'Ninguno' })).toBeInTheDocument();
   });
 });
 
@@ -100,12 +110,46 @@ describe('Palette add', () => {
     expect(within(screen.getByRole('tabpanel')).getAllByRole('button')).toHaveLength(5);
   });
 
+  it('shows the available colours of a recolourable flower only', () => {
+    setup({ hasArrangement: true });
+    expect(screen.getByRole('button', { name: 'Rose' })).toHaveAccessibleDescription(
+      'Colors: Red, Blush, White, Peach, Burgundy',
+    );
+    expect(screen.getByRole('button', { name: 'Sunflower' })).not.toHaveAccessibleDescription();
+  });
+
   it('makes tiles unavailable and adds nothing when the bouquet is full', async () => {
     const { onAdd } = setup({ hasArrangement: true, canAdd: false });
     const tile = screen.getByRole('button', { name: 'Rose' });
     expect(tile).toBeDisabled();
     await userEvent.click(tile);
     expect(onAdd).not.toHaveBeenCalled();
+  });
+});
+
+describe('Palette wrapping', () => {
+  it('chooses a wrapping, clears it with None, and marks the current choice', async () => {
+    const { onSelectWrapping } = setup({ wrappingId: 'ivory' });
+    await userEvent.click(tab('Wrapping'));
+    expect(screen.getByRole('button', { name: 'Ivory paper' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    expect(screen.getByRole('button', { name: 'Kraft paper' })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Kraft paper' }));
+    expect(onSelectWrapping).toHaveBeenLastCalledWith('kraft');
+    await userEvent.click(screen.getByRole('button', { name: 'None' }));
+    expect(onSelectWrapping).toHaveBeenLastCalledWith(null);
+  });
+
+  it('marks None as the current choice when there is no wrapping, and stays usable when full', async () => {
+    setup({ wrappingId: null, canAdd: false });
+    await userEvent.click(tab('Wrapping'));
+    expect(screen.getByRole('button', { name: 'None' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: 'Burlap' })).toBeEnabled();
   });
 });
 

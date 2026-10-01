@@ -22,6 +22,7 @@ export const es = {
   'palette.tab.foliage': 'Follaje',
   'palette.tab.wrapping': 'Envoltura',
   'palette.emptyHint': 'Empieza con una composición',
+  'palette.colors': 'Colores: {colors}',
   'composition.apply': 'Aplicar',
   'composition.replaceConfirm': '¿Reemplazar el arreglo actual?',
   'composition.round.name': 'Redondo',

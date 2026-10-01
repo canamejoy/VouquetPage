@@ -1,33 +1,48 @@
 import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { COLOR_HEX } from '@/domain/catalog';
-import type { Catalog, FlowerId, FlowerItem, FoliageId, FoliageItem } from '@/domain/catalog';
+import type {
+  Catalog,
+  FlowerId,
+  FlowerItem,
+  FoliageId,
+  FoliageItem,
+  WrappingId,
+} from '@/domain/catalog';
 import { useT } from '@/ui/i18n/useT';
 import { flowerIllustrations } from '@/ui/illustrations/flowers';
 import { foliageIllustrations } from '@/ui/illustrations/foliage';
+import { wrappingIllustrations } from '@/ui/illustrations/wrappings';
 import { CompositionPicker } from './CompositionPicker';
 import styles from './Palette.module.css';
 import { PaletteTile } from './PaletteTile';
 
-const TABS = ['compositions', 'flowers', 'foliage'] as const;
+const TABS = ['compositions', 'flowers', 'foliage', 'wrapping'] as const;
 type TabId = (typeof TABS)[number];
+
+/** The wrapping art is drawn in canvas coordinates, so its thumbnail frames the whole sheet. */
+const WRAPPING_VIEW_BOX = '-340 -565 680 840';
 
 interface PaletteProps {
   catalog: Catalog;
   /** Template ids in display order; names and descriptions come from the dictionary. */
   compositionIds: readonly string[];
+  wrappingId: WrappingId | null;
   /** True when the bouquet has flowers or foliage; a wrapping alone does not count. */
   hasArrangement: boolean;
   canAdd: boolean;
   onAdd: (catalogId: FlowerId | FoliageId) => void;
+  onSelectWrapping: (wrappingId: WrappingId | null) => void;
   onApplyComposition: (compositionId: string) => void;
 }
 
 export function Palette({
   catalog,
   compositionIds,
+  wrappingId,
   hasArrangement,
   canAdd,
   onAdd,
+  onSelectWrapping,
   onApplyComposition,
 }: PaletteProps) {
   const t = useT();
@@ -61,6 +76,12 @@ export function Palette({
           <Thumbnail size={item.size} color={first ? COLOR_HEX[first] : undefined}>
             <Illustration />
           </Thumbnail>
+        }
+        swatches={item.colors.length > 0 ? item.colors.map((c) => COLOR_HEX[c]) : undefined}
+        description={
+          item.colors.length > 0
+            ? t('palette.colors', { colors: item.colors.map((c) => t(`color.${c}`)).join(', ') })
+            : undefined
         }
         disabled={!canAdd}
         onClick={() => onAdd(item.id)}
@@ -126,6 +147,36 @@ export function Palette({
         )}
         {active === 'foliage' && (
           <div className={styles.grid}>{catalog.foliage.map(foliageTile)}</div>
+        )}
+        {active === 'wrapping' && (
+          <div className={styles.grid}>
+            <PaletteTile
+              label={t('common.none')}
+              pressed={wrappingId === null}
+              onClick={() => onSelectWrapping(null)}
+            />
+            {catalog.wrappings.map((item) => {
+              const { Back, Front } = wrappingIllustrations[item.id];
+              return (
+                <PaletteTile
+                  key={item.id}
+                  label={t(`catalog.${item.id}`)}
+                  thumbnail={
+                    <svg
+                      className={styles.thumbnail}
+                      viewBox={WRAPPING_VIEW_BOX}
+                      aria-hidden="true"
+                    >
+                      <Back />
+                      <Front />
+                    </svg>
+                  }
+                  pressed={wrappingId === item.id}
+                  onClick={() => onSelectWrapping(item.id)}
+                />
+              );
+            })}
+          </div>
         )}
       </div>
     </div>

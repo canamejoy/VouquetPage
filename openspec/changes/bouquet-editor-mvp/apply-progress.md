@@ -246,3 +246,12 @@ Single PR: `feat/bouquet-editor-18-gestures` (base `feat/bouquet-editor-17-canva
 - Deviation: the hook measures the rect at pointerdown (not only via `ResizeObserver`) so page scroll cannot leave it stale; `ResizeObserver` only feeds `modelPerPixel`. Capture is taken on the svg, not the pressed node.
 - jsdom 30 re-checked: pointer-capture methods and `ResizeObserver` still missing (stub stays); `PointerEvent` carries `pointerId`, `clientX`, `clientY`. Real touch behaviour remains U4.
 - Rollback: `src/ui/containers` and the `EditorCanvas.tsx` pointer props.
+
+## Batch 19: Group 19, slice 19 "Palette and add" (tasks 19.1 to 19.5)
+
+Split a/b/c, stacked. 19a `feat/bouquet-editor-19a-composition-picker` (base `feat/bouquet-editor-18-gestures`): `defaultAnchor`, `InlineConfirm`, `CompositionPicker`. 19b `feat/bouquet-editor-19b-palette-tabs` (base 19a): `Palette` with tabs, `PaletteTile`, flower and foliage tap-add. 19c `feat/bouquet-editor-19-palette` (base 19b): wrapping tab, colour dots, `PaletteContainer`, this record. PR numbers in the PR bodies. 5/5 tasks of Group 19 complete (Groups 20 to 27 pending). Tests: 624 passing (594 before, 30 new).
+
+- RED: every new test file failed on an unresolved import (no tests ran); GREEN after implementation. One real fix: design says the golden-angle offset is at most 163, the exact bound is 34 * sqrt(23) = 163.06, so the test uses the exact value.
+- Deviations: one new key `palette.colors` (spoken colour list); `Button` now accepts `ref` (React 19 prop) so focus returns to Apply after Cancel; composition tab mounts `CompositionPicker` (extra file, not in the task list). Colour choice at add time is the first catalog colour; recolouring stays in the toolbar (slice 21); the palette only shows the available colours.
+- Visual: thumbnails rendered with resvg (scratch, not committed); palette layout and CSS were not seen (no browser).
+- Rollback: `src/ui/organisms/Palette`, `PaletteContainer*`, `InlineConfirm*`, `defaultAnchor*`, the `Button` ref typing and the `palette.colors` keys.

@@ -24,6 +24,7 @@ export const en = {
   'palette.tab.foliage': 'Foliage',
   'palette.tab.wrapping': 'Wrapping',
   'palette.emptyHint': 'Start with a composition',
+  'palette.colors': 'Colors: {colors}',
   'composition.apply': 'Apply',
   'composition.replaceConfirm': 'Replace the current arrangement?',
   'composition.round.name': 'Round',
