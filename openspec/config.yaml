@@ -1,0 +1,45 @@
+schema: spec-driven
+context: |
+  Project: VOUQUET (VouquetPage), interactive web platform for designing flower bouquets.
+  MVP: 2D bouquet editor. Repo: github.com/canamejoy/VouquetPage (branch main).
+  Status: greenfield, no source code, no package.json, no test runner installed.
+  Intended stack (NOT yet installed, to be confirmed in explore/design): React, TypeScript (strict), Vite,
+  deploy to Cloudflare from GitHub. 2D rendering tech (Canvas/Konva/Fabric.js/HTML+CSS) is undecided.
+  Artifact language: English, neutral professional register.
+persistence: hybrid
+strict_tdd: false
+strict_tdd_intent: true
+strict_tdd_note: >
+  User configuration requests Strict TDD, but zero projects are discovered and no workspace-level
+  test command exists, so the effective value is false. Re-run sdd-init (or flip this value) after
+  the project is scaffolded and a test command (Vitest is a candidate, not a decision) is chosen in design.
+projects: []
+testing:
+  runner: null
+  runner_candidate: vitest   # candidate only; to be decided in design
+  test_command: null
+  layers:
+    unit: false
+    integration: false
+    e2e: false
+  coverage: false
+  linter: false
+  type_checker: false   # TypeScript strict intended
+  formatter: false
+rules:
+  proposal:
+    - Do not decide the 2D rendering technology without a documented comparison.
+  specs:
+    - Use Given/When/Then scenarios with RFC 2119 keywords.
+  design:
+    - Choose and justify the test runner and 2D rendering approach.
+    - Define a workspace-level test command so Strict TDD can be enabled.
+  tasks:
+    - First task group must scaffold the project and test runner before feature work.
+  apply:
+    - Follow Strict TDD (test first) once a test command exists.
+    - Do not create commits unless asked; use conventional commits without AI attribution.
+  verify:
+    - Run the workspace test command once available.
+  archive:
+    - Merge delta specs into openspec/specs before archiving.

@@ -1,0 +1,36 @@
+schema: gentle-ai.sdd-preproposal/v1
+revision: 2
+change: bouquet-editor-mvp
+exploration:
+  outcome: done
+  openspec_ref: openspec/changes/bouquet-editor-mvp/exploration.md
+  engram_ref: sdd/bouquet-editor-mvp/explore
+research:
+  request: unselected
+  classes: []
+  admission: not-applicable
+  outcome: null
+  openspec_ref: null
+  engram_ref: null
+product_decisions:
+  status: confirmed
+  confirmed_by: user
+  confirmed_at: 2026-09-30
+  items:
+    - id: ui-language
+      answer: both-i18n
+      detail: The interface is available in Spanish and English, switchable by the user.
+    - id: price-currency-and-meaning
+      answer: single-estimated-total-selectable-currency
+      detail: The user can choose between COP and USD. Fixed exchange rate 3400 COP = 1 USD. Single total labelled as estimated.
+      orchestrator_assumption: Catalog prices are authored in COP as the base currency and converted to USD with the fixed rate; sample prices are marked as sample data. To be confirmed or corrected by the user at review.
+    - id: catalog-and-art-source
+      answer: agent-designed-svg
+      detail: The implementation generates the illustrations. About 8 flower types, 5 foliage types and 5 wrappings. When a flower supports color changes the available colors are shown; color availability is per flower (for example roses are recolorable, sunflowers are not).
+    - id: persistence
+      answer: localstorage-draft
+      detail: Autosave of one draft in localStorage.
+    - id: undo-redo
+      answer: defer
+      detail: Not included in the MVP.
+proposal_ready: true

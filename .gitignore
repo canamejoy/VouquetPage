@@ -1,0 +1,15 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Local environment and credentials (never commit real values)
+.env
+.env.*
+!.env.local.example
+.dev.vars*
+
+# Cloudflare Wrangler local state
+.wrangler/
+
+# Local agent tooling (contains machine-specific absolute paths)
+.atl/

@@ -1,0 +1,21 @@
+change: bouquet-editor-mvp
+artifact_store: hybrid
+execution_mode: auto
+delivery_strategy: auto-chain
+chain_strategy: stacked-to-main
+git_authorization: user authorized baseline commit on main, pushes to origin and PR creation (2026-10-01)
+phases:
+  init: done
+  explore: done
+  research: unselected
+  preproposal: confirmed
+  proposal: done
+  specs: done
+  design: done
+  tasks: done
+  apply: in-progress
+  verify: blocked
+  archive: blocked
+blocked_on: null
+preproposal_revision: 2
+updated_at: 2026-09-30
