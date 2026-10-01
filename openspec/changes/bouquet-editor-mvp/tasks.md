@@ -161,12 +161,12 @@ Traceability: summary-pricing (Grouped summary, Single estimated total, Currency
 
 Traceability: compositions (Six deterministic compositions, Apply then edit, shared mechanics).
 
-- [ ] 7.1 RED/GREEN: mulberry32 in `src/domain/composition/rng.ts` (seed determinism, range).
-- [ ] 7.2 RED/GREEN: ring-slot helper (K, T, `d`, partial ring spreading, n = 1 no division by zero) in `src/domain/composition/rings.ts`.
-- [ ] 7.3 RED/GREEN: lane helper on a quadratic Bezier (L, S, `t`, S = 1 midpoint) in `src/domain/composition/lanes.ts`.
-- [ ] 7.4 RED/GREEN: canonical ordering and `ItemRef`, `CompositionGenerator` types in `src/domain/composition/types.ts`.
-- [ ] 7.5 RED/GREEN: `applyComposition` in `src/domain/bouquet/compose.ts`: ids `e1..eN`, wrapping kept, count equals items, empty-for-compositions rule (wrapping-only counts as empty).
-- [ ] 7.6 Write `docs/adr/0004-compositions.md`.
+- [x] 7.1 RED/GREEN: mulberry32 in `src/domain/composition/rng.ts` (seed determinism, range).
+- [x] 7.2 RED/GREEN: ring-slot helper (K, T, `d`, partial ring spreading, n = 1 no division by zero) in `src/domain/composition/rings.ts`.
+- [x] 7.3 RED/GREEN: lane helper on a quadratic Bezier (L, S, `t`, S = 1 midpoint) in `src/domain/composition/lanes.ts`.
+- [x] 7.4 RED/GREEN: canonical ordering and `ItemRef`, `CompositionGenerator` types in `src/domain/composition/types.ts`.
+- [x] 7.5 RED/GREEN: `applyComposition` in `src/domain/bouquet/compose.ts`: ids `e1..eN`, wrapping kept, count equals items, empty-for-compositions rule (wrapping-only counts as empty).
+- [x] 7.6 Write `docs/adr/0004-compositions.md`.
 
 ## Group 8: Templates A (PR 8)
 
