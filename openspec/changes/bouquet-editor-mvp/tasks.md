@@ -116,10 +116,10 @@ Traceability: deployment (Production build); design D10, enables Strict TDD per 
 
 Traceability: bouquet-model (Position bounds); bouquet-editor (Selection and transforms, transform handles).
 
-- [ ] 2.1 RED: `src/domain/geometry/geometry.test.ts` for `clientToModel`, `modelPerPixel` (viewBox `-500 -1000 1000 1300`, `xMidYMid meet`, letterboxing), angle normalization to `[0, 360)`.
-- [ ] 2.2 GREEN: `src/domain/geometry/{point,viewport,angle}.ts`.
-- [ ] 2.3 RED: gesture tests (move clamped to bounds, rotate delta about anchor, scale ratio clamped `[0.4, 2.5]`).
-- [ ] 2.4 GREEN: `src/domain/geometry/gestures.ts`; export from `src/domain/geometry/index.ts`.
+- [x] 2.1 RED: `src/domain/geometry/geometry.test.ts` for `clientToModel`, `modelPerPixel` (viewBox `-500 -1000 1000 1300`, `xMidYMid meet`, letterboxing), angle normalization to `[0, 360)`.
+- [x] 2.2 GREEN: `src/domain/geometry/{point,viewport,angle}.ts`.
+- [x] 2.3 RED: gesture tests (move clamped to bounds, rotate delta about anchor, scale ratio clamped `[0.4, 2.5]`).
+- [x] 2.4 GREEN: `src/domain/geometry/gestures.ts`; export from `src/domain/geometry/index.ts`.
 
 ## Group 3: Catalog (PR 3)
 
