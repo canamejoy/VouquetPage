@@ -144,8 +144,8 @@ Traceability: bouquet-model (Renderer-independent structure, Element operations,
 
 Traceability: draft-persistence (Safe handling of invalid data, validation half); bouquet-model (Renderer-independent structure).
 
-- [ ] 5.1 RED: `src/domain/bouquet/parse.test.ts` table: wrong version, over 60, bad or duplicate id, unknown or mismatched catalogId, non-finite number, anchor out of bounds, scale out of clamp, rotation outside `[0, 360)`, bad `colorId`, unknown wrapping, valid roundtrip.
-- [ ] 5.2 GREEN: `src/domain/bouquet/parse.ts` (`parseBouquet`, all-or-nothing); export from `src/domain/bouquet/index.ts`.
+- [x] 5.1 RED: `src/domain/bouquet/parse.test.ts` table: wrong version, over 60, bad or duplicate id, unknown or mismatched catalogId, non-finite number, anchor out of bounds, scale out of clamp, rotation outside `[0, 360)`, bad `colorId`, unknown wrapping, valid roundtrip.
+- [x] 5.2 GREEN: `src/domain/bouquet/parse.ts` (`parseBouquet`, all-or-nothing); export from `src/domain/bouquet/index.ts`.
 
 ## Group 6: Pricing (PR 6)
 

@@ -124,3 +124,11 @@ Split a/b (whole slice about 640 lines). 4a: `feat/bouquet-editor-04a-core-opera
 - RED per pair observed: 4a import of `./add` unresolved (no tests ran); 4b 14 of 38 failed (`duplicateElement`/`reorderElement` not a function) plus `./quantities` unresolved. GREEN: 24/24 then 43/43 in `src/domain/bouquet`.
 - Deviations: `clamp` now exported from `domain/geometry/index.ts`; `Point` imported from geometry, not redeclared; `addElement(bouquet, catalogId, position, catalog?)` takes only flower or foliage ids; no-ops return the same reference; added `elementQuantities`, `ReorderDirection`, `DUPLICATE_OFFSET`.
 - Rollback: `src/domain/bouquet` and `docs/adr/0002-bouquet-model.md`.
+
+## Batch 5: Group 5, slice 5 "Bouquet validation" (tasks 5.1, 5.2)
+
+Branch `feat/bouquet-editor-05-parse` (base `feat/bouquet-editor-04-bouquet-ops`), single PR, about 240 changed lines. 2/2 tasks of Group 5 complete (Groups 6 to 27 pending). Tests: 160 passing in `npm test` (60 new in `parse.test.ts`).
+
+- RED: `parse.test.ts` failed on unresolved `./parse` import (no tests ran). GREEN: 103/103 in `src/domain/bouquet`.
+- Choices where the design is silent: a recolourable flower with `colorId` null or missing is rejected, and a fixed-colour flower with a non-null `colorId` is rejected; foliage ignores any `colorId`; unknown extra properties are dropped (fresh objects returned); `ID_PATTERN` is now exported from `ids.ts` and reused; ids need not be contiguous.
+- Rollback: `src/domain/bouquet/parse.ts`, `parse.test.ts`, the `parseBouquet` export, `ID_PATTERN` export.
