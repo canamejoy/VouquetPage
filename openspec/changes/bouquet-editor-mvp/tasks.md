@@ -181,11 +181,11 @@ Traceability: compositions (Six deterministic compositions: Round, Compact, Asym
 
 Traceability: compositions (Six deterministic compositions: Wild, Long stems, Cascade; distinctness).
 
-- [ ] 9.1 RED: `src/domain/composition/templates-b.test.ts` with the same split table and envelope checks as 8.1.
-- [ ] 9.2 GREEN: `src/domain/composition/templates/wild.ts` (shuffled phyllotaxis, seeded jitter; two seeds differ).
-- [ ] 9.3 GREEN: `src/domain/composition/templates/longStems.ts` (flower abs(x) at most 200 and y at most -600 for default set).
-- [ ] 9.4 GREEN: `src/domain/composition/templates/cascade.ts` (six anchors with x > 0 and y > -420; lowest y > 100).
-- [ ] 9.5 RED/GREEN: `src/domain/composition/registry.ts` (`{ id, seed, defaultItems, generate }`) and distinctness test on shared lists of 2, 12, 60 items; inline goldens for B templates.
+- [x] 9.1 RED: `src/domain/composition/templates-b.test.ts` with the same split table and envelope checks as 8.1.
+- [x] 9.2 GREEN: `src/domain/composition/templates/wild.ts` (shuffled phyllotaxis, seeded jitter; two seeds differ).
+- [x] 9.3 GREEN: `src/domain/composition/templates/longStems.ts` (flower abs(x) at most 200 and y at most -600 for default set).
+- [x] 9.4 GREEN: `src/domain/composition/templates/cascade.ts` (six anchors with x > 0 and y > -420; lowest y > 100).
+- [x] 9.5 RED/GREEN: `src/domain/composition/registry.ts` (`{ id, seed, defaultItems, generate }`) and distinctness test on shared lists of 2, 12, 60 items; inline goldens for B templates.
 
 ## Group 10: Editor reducer (PR 10)
 

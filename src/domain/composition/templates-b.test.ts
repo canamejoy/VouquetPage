@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { CATALOG } from '../catalog';
 import type { Point } from '../geometry';
+import { COMPOSITIONS } from './registry';
+import { ASYMMETRIC_DEFAULT_ITEMS } from './templates/asymmetric';
+import { CASCADE_DEFAULT_ITEMS, generateCascade } from './templates/cascade';
 import { generateLongStems, LONG_STEMS_DEFAULT_ITEMS } from './templates/longStems';
 import { generateWild, WILD_DEFAULT_ITEMS } from './templates/wild';
 import type { CompositionGenerator, ElementPlacement, ItemRef } from './types';
@@ -60,6 +63,11 @@ const ENVELOPES = [
         ? Math.abs(p.position.x) <= 186 && p.position.y >= -900 && p.position.y <= -100
         : Math.abs(p.position.x) <= 320 && p.position.y <= 80,
   },
+  {
+    name: 'Cascade',
+    generate: generateCascade,
+    inside: ({ position: { x, y } }: ElementPlacement) => y >= -998 && y <= 248 && x <= 398,
+  },
 ];
 
 describe.each(ENVELOPES)('$name', ({ generate, inside }) => {
@@ -88,10 +96,13 @@ describe.each(ENVELOPES)('$name', ({ generate, inside }) => {
   });
 });
 
-describe('Wild', () => {
-  it('gives different layouts for two seeds', () => {
+describe('Wild and Cascade jitter', () => {
+  it.each([
+    ['Wild', generateWild],
+    ['Cascade', generateCascade],
+  ])('%s gives different layouts for two seeds', (_name, generate) => {
     const items = itemsOf(8, 5);
-    expect(run(generateWild, items, 3)).not.toEqual(run(generateWild, items, 4));
+    expect(run(generate, items, 3)).not.toEqual(run(generate, items, 4));
   });
 });
 
@@ -105,6 +116,47 @@ describe('Long stems, default set', () => {
       expect(Math.abs(position.x)).toBeLessThanOrEqual(200);
       expect(position.y).toBeLessThanOrEqual(-600);
     }
+  });
+});
+
+describe('Cascade, default set', () => {
+  it('trails down to the right: six anchors with x > 0 and y > -420, lowest y > 100', () => {
+    const anchors = run(generateCascade, CASCADE_DEFAULT_ITEMS).map((p) => p.position);
+    expect(anchors.filter((a) => a.x > 0 && a.y > -420).length).toBeGreaterThanOrEqual(6);
+    expect(Math.max(...anchors.map((a) => a.y))).toBeGreaterThan(100);
+  });
+});
+
+describe('registry', () => {
+  it('lists the six templates in the order of the spec with their own default sets', () => {
+    expect(COMPOSITIONS.map((t) => t.id)).toEqual([
+      'round',
+      'compact',
+      'asymmetric',
+      'wild',
+      'long-stems',
+      'cascade',
+    ]);
+    expect(COMPOSITIONS[2]?.defaultItems).toBe(ASYMMETRIC_DEFAULT_ITEMS);
+  });
+
+  it('gives each template a default set its generator places one item per entry', () => {
+    for (const { defaultItems, generate, seed } of COMPOSITIONS) {
+      const placements = generate({ items: defaultItems, catalog: CATALOG, seed });
+      expect(placements).toHaveLength(defaultItems.length);
+    }
+  });
+
+  it.each([
+    [1, 1],
+    [8, 4],
+    [40, 20],
+  ])('gives no two templates the same layout for shared lists of (%i, %i)', (n, m) => {
+    const items = itemsOf(n, m);
+    const layouts = COMPOSITIONS.map((t) =>
+      JSON.stringify(t.generate({ items, catalog: CATALOG, seed: t.seed }).map((p) => p.position)),
+    );
+    expect(new Set(layouts).size).toBe(COMPOSITIONS.length);
   });
 });
 
@@ -162,6 +214,33 @@ describe('golden layouts of the default sets', () => {
         "rose:red -62,-785 r354 s1",
         "rose:red 62,-785 r6 s1",
         "lily:white 0,-900 r0 s1",
+      ]
+    `);
+  });
+
+  it('Cascade', () => {
+    expect(describePlacements(run(generateCascade, CASCADE_DEFAULT_ITEMS))).toMatchInlineSnapshot(`
+      [
+        "ruscus -364,-796 r300 s1",
+        "ruscus -173,-965 r340 s1",
+        "ruscus 86,-974 r20 s1",
+        "ruscus 293,-792 r60 s1",
+        "fern 205,-335 r149 s1",
+        "fern 303,-89 r168 s1",
+        "fern 331,241 r180 s1",
+        "tulip:white 319,146 r177 s0.6",
+        "carnation:white 301,-63 r171 s0.69",
+        "carnation:white 259,-241 r161 s0.77",
+        "rose:white 193,-376 r149 s0.86",
+        "rose:white 105,-484 r133 s0.95",
+        "rose:white -37,-315 r180 s1",
+        "rose:white -171,-682 r300 s1",
+        "rose:white -170,-530 r240 s1",
+        "rose:blush -38,-461 r180 s1",
+        "rose:blush 83,-535 r120 s1",
+        "rose:blush 96,-684 r60 s1",
+        "rose:blush -38,-759 r0 s1",
+        "lily:white -40,-610 r0 s1",
       ]
     `);
   });

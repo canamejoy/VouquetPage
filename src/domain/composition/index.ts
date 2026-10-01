@@ -19,6 +19,7 @@ export {
 export type { RingSlot } from './rings';
 export { mulberry32 } from './rng';
 export type { Rng } from './rng';
+export { COMPOSITIONS } from './registry';
 export { roundAnchor, roundRotation, roundScale } from './rounding';
 export type {
   CompositionGenerator,
