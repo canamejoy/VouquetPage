@@ -265,3 +265,13 @@ Split a/b, stacked. 20a `feat/bouquet-editor-20a-drop-rule` (base `feat/bouquet-
 - Deviations: the drag-then-click suppression is a flag read by `PaletteContainer` (`drag.consumeDragClick()`); task 20.3 "wrapping drop ignores position" is satisfied by wrapping tiles not being draggable (tested).
 - Unverified without a device (user action U4): touch drag out of the future bottom sheet, `touch-action: pan-y` on tiles, ghost look.
 - Rollback: `usePaletteDrag*`, `DragGhost*`, `dropPosition`, the `drag` / `svgRef` / `onDragStart` / `onPointerDown` props.
+
+## Batch 21: Group 21, slice 21 "Selection toolbar" (tasks 21.1 to 21.5)
+
+Split a/b, stacked. 21a `feat/bouquet-editor-21a-toolbar-organism` (base `feat/bouquet-editor-20-drag-add`): `dockSide` and `SelectionToolbar`. 21b `feat/bouquet-editor-21-toolbar` (base 21a): `SelectionToolbarContainer`, this record. PR numbers in the PR bodies. 5/5 tasks of Group 21 complete (Groups 22 to 27 pending). Tests: 684 passing (641 before, 43 new).
+
+- RED: all three new test files failed on unresolved imports (no tests ran); GREEN after implementation, first run.
+- Steps: rotate 15 degrees, scale 0.1 (rounded to 2 decimals). Container `SelectionToolbarContainer({ state, dispatch, gesturing })`; the hook does not expose gesture state yet, so slice 24 must pass `gesturing` (task 21.3 keeps the side and locks pointer events through it).
+- Deviation: task 21.5 needed no new keys (all `toolbar.*` and `color.*` keys already existed).
+- Unverified without a browser: row widths 292 px and 340 px are computed (44 px targets, 4 px gaps and padding), not rendered; swatch ring look.
+- Rollback: `SelectionToolbar*`, `SelectionToolbarContainer*`, `dockSide*`.

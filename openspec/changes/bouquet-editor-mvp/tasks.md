@@ -293,11 +293,11 @@ Traceability: bouquet-editor (Create and add items: Drag to add, Drop outside).
 
 Traceability: bouquet-editor (Selection and transforms: Delete; Keyboard access: Button actions; Recolor).
 
-- [ ] 21.1 RED: `src/ui/organisms/SelectionToolbar/SelectionToolbar.test.tsx`: row 1 (rotate, scale, layer), row 2 (swatches only for recolourable flowers, duplicate, delete), activation by keyboard.
-- [ ] 21.2 GREEN: `src/ui/organisms/SelectionToolbar/SelectionToolbar.tsx`, `src/ui/containers/SelectionToolbarContainer.tsx`.
-- [ ] 21.3 RED/GREEN: pure dock-side function (`y > -350` goes top) in `src/domain/geometry/dockSide.ts`; toolbar keeps side and ignores pointer events during a gesture.
-- [ ] 21.4 RED/GREEN: recolour rose changes render colour; fixed-colour flower shows no swatches.
-- [ ] 21.5 Add toolbar keys to `src/ui/i18n/en.ts` and `src/ui/i18n/es.ts`.
+- [x] 21.1 RED: `src/ui/organisms/SelectionToolbar/SelectionToolbar.test.tsx`: row 1 (rotate, scale, layer), row 2 (swatches only for recolourable flowers, duplicate, delete), activation by keyboard.
+- [x] 21.2 GREEN: `src/ui/organisms/SelectionToolbar/SelectionToolbar.tsx`, `src/ui/containers/SelectionToolbarContainer.tsx`.
+- [x] 21.3 RED/GREEN: pure dock-side function (`y > -350` goes top) in `src/domain/geometry/dockSide.ts`; toolbar keeps side and ignores pointer events during a gesture.
+- [x] 21.4 RED/GREEN: recolour rose changes render colour; fixed-colour flower shows no swatches.
+- [x] 21.5 Add toolbar keys to `src/ui/i18n/en.ts` and `src/ui/i18n/es.ts`.
 
 ## Group 22: Keyboard and accessibility (PR 22)
 
