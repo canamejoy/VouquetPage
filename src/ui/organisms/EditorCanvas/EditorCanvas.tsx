@@ -4,7 +4,7 @@ import { flowerIllustrations } from '@/ui/illustrations/flowers';
 import { foliageIllustrations } from '@/ui/illustrations/foliage';
 import { wrappingIllustrations } from '@/ui/illustrations/wrappings';
 import { useT } from '@/ui/i18n/useT';
-import type { PointerEvent } from 'react';
+import type { PointerEvent, Ref } from 'react';
 import styles from './EditorCanvas.module.css';
 import { SelectionOverlay, type HandleKind } from './SelectionOverlay';
 import { stemPath } from './stems';
@@ -18,6 +18,12 @@ interface EditorCanvasProps {
   onBackgroundPointerDown?: (event: PointerEvent<SVGElement>) => void;
   onElementPointerDown?: (id: string, event: PointerEvent<SVGElement>) => void;
   onHandlePointerDown?: (kind: HandleKind, event: PointerEvent<SVGElement>) => void;
+  /** Move, up and cancel reach the svg because the gesture owner captures the pointer on it. */
+  onPointerMove?: (event: PointerEvent<SVGElement>) => void;
+  onPointerUp?: (event: PointerEvent<SVGElement>) => void;
+  onPointerCancel?: (event: PointerEvent<SVGElement>) => void;
+  /** The container measures the rendered svg; React 19 takes `ref` as a plain prop. */
+  ref?: Ref<SVGSVGElement>;
 }
 
 const NO_POINTER = { pointerEvents: 'none' } as const;
@@ -31,6 +37,10 @@ export function EditorCanvas({
   onBackgroundPointerDown,
   onElementPointerDown,
   onHandlePointerDown,
+  onPointerMove,
+  onPointerUp,
+  onPointerCancel,
+  ref,
 }: EditorCanvasProps) {
   const t = useT();
   const selected = bouquet.elements.find((element) => element.id === selectedId);
@@ -53,11 +63,21 @@ export function EditorCanvas({
 
   return (
     <svg
+      ref={ref}
       className={styles.canvas}
       viewBox="-500 -1000 1000 1300"
       preserveAspectRatio="xMidYMid meet"
       role="group"
       aria-label={t('canvas.label')}
+      // Touch drags on the design area must reach Pointer Events, not scroll the page (D1).
+      style={{ touchAction: 'none' }}
+      // The viewBox is letterboxed, so presses outside the background rect land on the svg itself.
+      onPointerDown={(event) => {
+        if (event.target === event.currentTarget) onBackgroundPointerDown?.(event);
+      }}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerCancel}
     >
       <rect
         data-layer="background"

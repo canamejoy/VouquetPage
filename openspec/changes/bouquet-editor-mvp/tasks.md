@@ -266,10 +266,10 @@ Traceability: bouquet-editor (Selection and transforms: visible selection, eleme
 
 Traceability: bouquet-editor (Selection and transforms: Move by touch, Rotate and scale handles, Deselect; Free composition).
 
-- [ ] 18.1 RED: `src/ui/containers/useTransformGesture.test.tsx`: pointerdown selects and captures, move dispatches `element/transform`, pointerup and pointercancel end, background pointerdown dispatches `element/select` null.
-- [ ] 18.2 GREEN: `src/ui/containers/useTransformGesture.ts` and `src/ui/containers/EditorCanvasContainer.tsx` (`ResizeObserver` viewport).
-- [ ] 18.3 RED/GREEN: rotate and scale handle drags stay within bounds; `touch-action: none` asserted on the canvas.
-- [ ] 18.4 Re-verify jsdom pointer-capture support from group 1 against the real hook; document any limits in `docs/adr/0001-svg-renderer.md`.
+- [x] 18.1 RED: `src/ui/containers/useTransformGesture.test.tsx`: pointerdown selects and captures, move dispatches `element/transform`, pointerup and pointercancel end, background pointerdown dispatches `element/select` null.
+- [x] 18.2 GREEN: `src/ui/containers/useTransformGesture.ts` and `src/ui/containers/EditorCanvasContainer.tsx` (`ResizeObserver` viewport).
+- [x] 18.3 RED/GREEN: rotate and scale handle drags stay within bounds; `touch-action: none` asserted on the canvas.
+- [x] 18.4 Re-verify jsdom pointer-capture support from group 1 against the real hook; document any limits in `docs/adr/0001-svg-renderer.md`.
 
 ## Group 19: Palette and tap add (PR 19)
 
