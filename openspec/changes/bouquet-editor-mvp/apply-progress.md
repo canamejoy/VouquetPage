@@ -141,3 +141,11 @@ Split a/b (whole slice 456 lines). 6a: `feat/bouquet-editor-06a-usd-allocation` 
 - Choices where the design is silent: lines in catalog order, colours in the flower colour list order (that order is also the allocation tie-break); wrapping line has quantity 1 and null colour; unknown catalog ids are skipped; summary carries integers only (`lineCop`, `lineUsdCents`, `totalCop`, `totalUsdCents`, `unitCop`).
 - Design formula and spec examples verified: 16 gives 0, 17 gives 1, 34000 gives 1000, 3 x 1000 COP gives 88 cents (30, 29, 29), exhaustive half-up check to 20000, 2000 random line sets sum exactly.
 - Rollback: `src/domain/pricing`, `docs/adr/0006-pricing.md`.
+
+## Batch 7: Group 7, slice 7 "Composition core" (tasks 7.1 to 7.6)
+
+Split a/b/c/d (whole slice 1105 lines). 7a: `feat/bouquet-editor-07a-rng-rings` (base `feat/bouquet-editor-06-pricing`), 368 lines, PRNG, rounding guards, ring slots. 7b: `feat/bouquet-editor-07b-lanes-types` (base 7a), 293 lines, lanes, generator types, ADR 0004. 7c: `feat/bouquet-editor-07c-canonical-order` (base 7b), 177 lines, canonical order. 7d: `feat/bouquet-editor-07-composition-core` (base 7c), 267 lines, `applyComposition`, index, this record. PR numbers in the PR bodies. 6/6 tasks of Group 7 complete (Groups 8 to 27 pending). Tests: 276 passing (190 before, 86 new).
+
+- RED per pair observed: each test file failed on its unresolved import (`./rng`, `./rounding`, `./rings`, `./lanes`, `./order`, `./compose`; no tests ran). GREEN: 6, 45, 73, 75 (composition, with a 1891-split envelope test) and 11 in compose.test.ts.
+- Design silent or adjusted: `applyComposition(bouquet, template, catalog = CATALOG)` takes a `CompositionTemplate` (`id`, `seed`, `defaultItems`, `generate`); canonical ordering lives in `order.ts` (not `types.ts`); added `rounding.ts` (`roundAnchor`, `roundRotation`, `roundScale`); `applyComposition` also drops extra placements and clamps anchors. All design formulas held for every split of 60 items (T <= 5, no division by zero, anchors inside the bounds for Round and Compact).
+- Rollback: `src/domain/composition`, `src/domain/bouquet/compose*`, `docs/adr/0004-compositions.md`.

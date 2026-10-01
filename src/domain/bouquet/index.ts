@@ -1,4 +1,5 @@
 export { addElement } from './add';
+export { applyComposition } from './compose';
 export { nextElementId } from './ids';
 export { DUPLICATE_OFFSET, MAX_ELEMENTS } from './limits';
 export {
