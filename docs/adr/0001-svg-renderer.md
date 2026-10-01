@@ -31,3 +31,15 @@ wrapping front so every element remains visible and selectable. The wrapping ign
   constant on-screen size through `modelPerPixel`.
 - Hand-built handles and gestures are our code to maintain. If they prove too costly, Konva is the
   documented fallback; the change touches `ui/organisms/EditorCanvas` and `ui/illustrations` only.
+
+## Gestures and jsdom limits (slice 18)
+
+`useTransformGesture` captures the pointer on the svg, not on the pressed node, because the scale
+handles re-render (and remount) as the scale changes. Presses in the letterbox land on the svg itself,
+so the svg also deselects. The canvas sets `touch-action: none`.
+
+jsdom 30 re-checked: `PointerEvent` carries `pointerId`, `clientX` and `clientY`, but `setPointerCapture`,
+`hasPointerCapture` and `releasePointerCapture` are still missing, so the stub in `src/test/setup.ts`
+stays. `ResizeObserver` is also missing and `getBoundingClientRect` returns zeros: the container skips
+observation when it is absent and tests stub the rect. Real touch scrolling, real pointer capture and
+layout are not verifiable in jsdom (user action U4).

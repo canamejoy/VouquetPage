@@ -237,3 +237,12 @@ Split a/b. 17a: `feat/bouquet-editor-17a-canvas-scene` (base `feat/bouquet-edito
 - Stem rule: every element gets one quadratic stem from its anchor to the origin (control point at 0.7x, 0.5y), one green stroke, drawn between wrapping back and front. Scene verified with a scratch resvg render (not committed).
 - Callbacks for slice 18: `onBackgroundPointerDown(event)`, `onElementPointerDown(id, event)`, `onHandlePointerDown(kind: 'scale' | 'rotate', event)`; no SVG ref yet.
 - Rollback 17b: `SelectionOverlay*` and the overlay lines in `EditorCanvas.tsx`.
+
+## Batch 18: Group 18, slice 18 "Gestures" (tasks 18.1 to 18.4)
+
+Single PR: `feat/bouquet-editor-18-gestures` (base `feat/bouquet-editor-17-canvas-render`). `useTransformGesture(state, dispatch, svgRef)` and `EditorCanvasContainer({ state, dispatch })` in `src/ui/containers`; `EditorCanvas` gains `ref`, `onPointerMove/Up/Cancel`, `touch-action: none` and svg-level deselect for the letterbox. 4/4 tasks of Group 18 complete (Groups 19 to 27 pending). Tests: 594 passing (583 before, 11 new).
+
+- RED: the test file failed on the unresolved container import (no tests ran), then 11/11 failed on the i18n test wrapper; GREEN: 11/11 once the container existed.
+- Deviation: the hook measures the rect at pointerdown (not only via `ResizeObserver`) so page scroll cannot leave it stale; `ResizeObserver` only feeds `modelPerPixel`. Capture is taken on the svg, not the pressed node.
+- jsdom 30 re-checked: pointer-capture methods and `ResizeObserver` still missing (stub stays); `PointerEvent` carries `pointerId`, `clientX`, `clientY`. Real touch behaviour remains U4.
+- Rollback: `src/ui/containers` and the `EditorCanvas.tsx` pointer props.
