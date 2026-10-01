@@ -81,3 +81,38 @@ Total tests: 37 passing (5 from slice 1, 32 new).
 - `rotateGesture` returns unrounded degrees (normalized to `[0, 360)`); design says only that stored rotation is normalized.
 - `import()` is banned only in `domain`, as requested. `application`, `infrastructure` and `ui` can still bypass their rules with a dynamic import (lazy loading in `ui` may be legitimate).
 - Layer patterns now use `regex` anchors; a relative import is matched by its leading `../` chain only, so `../application` from `src/domain/x` is treated as reaching the application layer (conservative).
+
+## Batch 3: Group 3, slice 3 "Catalog" (tasks 3.1 to 3.3)
+
+Split a/b because the slice measured 419 changed lines (budget 400). 3a: branch `feat/bouquet-editor-03a-catalog-data` (base `feat/bouquet-editor-02-geometry`), PR #5, 378 lines, code and tests. 3b: branch `feat/bouquet-editor-03-catalog` (base 3a), PR #6, SDD progress record. Status: 3/3 tasks of Group 3 complete (Groups 4 to 27 pending).
+
+| Task | State | Evidence |
+|------|-------|----------|
+| 3.1 | done | RED: `catalog.test.ts` failed with "Failed to resolve import ./data" (no tests ran) |
+| 3.2 | done | GREEN: `types.ts`, `colors.ts`, `data.ts`, `lookup.ts`, `index.ts`; 15/15 tests pass |
+| 3.3 | done | RED: 5 of 20 failed with "isColorAvailable is not a function"; GREEN: `isColorAvailable`, `defaultColor` added, 20/20 pass |
+
+### TDD Cycle Evidence
+
+| Task | Test File | Layer | Safety Net | RED | GREEN | TRIANGULATE | REFACTOR |
+|------|-----------|-------|------------|-----|-------|-------------|----------|
+| 3.1/3.2 | `src/domain/catalog/catalog.test.ts` | Unit | N/A (new) | Failed on missing `./data` import | 15/15 passed | counts, unique ids, all prices and sizes pinned, hex pinned, 3 lookup kinds plus unknown ids | None needed |
+| 3.3 | `src/domain/catalog/catalog.test.ts` | Unit | 15/15 | 5 failed (`isColorAvailable is not a function`) | 20/20 passed | accept, reject outside list, fixed flowers, unknown flower, default colour | None needed |
+
+Total tests: 57 passing (37 before, 20 new).
+
+### Work Unit Evidence
+
+| Evidence | Value |
+|---|---|
+| Focused test command | `npx vitest run src/domain/catalog`: 1 file, 20 tests passed |
+| Runtime harness | N/A: static data and pure functions; `npm run check` green |
+| Rollback boundary | `src/domain/catalog` |
+
+### Deviations and findings
+
+- Design D3 does not name lookup helpers; added `getItem`, `getFlower`, `getFoliage`, `getWrapping`, `isColorAvailable`, `defaultColor` (each takes an optional catalog, defaulting to `CATALOG`, matching `parseBouquet(raw, catalog)` and `CompositionGenerator` which receive a catalog).
+- `ColorId` is derived from `COLOR_HEX` keys (`as const`) in `colors.ts`; the id unions for flowers, foliage and wrappings are written out in `types.ts` as in the Interfaces block (a test pins data against them via the typed `Catalog`, and uniqueness is tested). Not derived from data to avoid a circular type dependency.
+- Wrapping id `blush` and colour id `blush` share a string but live in separate dictionary namespaces (`catalog.blush` versus `color.blush`); no clash in code since `ColorId` and `WrappingId` are distinct types. Slice 11 must not flatten them.
+- Catalog items carry no name or illustration field (names come from `catalog.<id>` keys, illustrations from the slice 15 registry), per D3.
+- Prices are sample data authored in whole COP (comment in `data.ts`); COP base currency still awaits user confirmation (U5).

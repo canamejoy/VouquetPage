@@ -125,9 +125,9 @@ Traceability: bouquet-model (Position bounds); bouquet-editor (Selection and tra
 
 Traceability: catalog (Catalog size and categories, Per-flower color availability, Sample price disclosure data).
 
-- [ ] 3.1 RED: `src/domain/catalog/catalog.test.ts`: 8 flowers, 5 foliage, 5 wrappings; at least two colours when recolourable; first colour is default; `colors: []` for sunflower and lavender; integer COP prices; lookup by id.
-- [ ] 3.2 GREEN: `src/domain/catalog/{types,colors,data,lookup,index}.ts` with `as const` unions and the D3 hex values and prices.
-- [ ] 3.3 RED/GREEN: recolour-availability helper (colour outside list rejected) in `src/domain/catalog/lookup.ts`.
+- [x] 3.1 RED: `src/domain/catalog/catalog.test.ts`: 8 flowers, 5 foliage, 5 wrappings; at least two colours when recolourable; first colour is default; `colors: []` for sunflower and lavender; integer COP prices; lookup by id.
+- [x] 3.2 GREEN: `src/domain/catalog/{types,colors,data,lookup,index}.ts` with `as const` unions and the D3 hex values and prices.
+- [x] 3.3 RED/GREEN: recolour-availability helper (colour outside list rejected) in `src/domain/catalog/lookup.ts`.
 
 ## Group 4: Bouquet operations (PR 4)
 
