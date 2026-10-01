@@ -133,12 +133,12 @@ Traceability: catalog (Catalog size and categories, Per-flower color availabilit
 
 Traceability: bouquet-model (Renderer-independent structure, Element operations, Element limit, Position bounds, Layer order, Derived quantities).
 
-- [ ] 4.1 RED: `src/domain/bouquet/operations.test.ts`: add (clamped, default colour, id `e{n}` = max suffix + 1), limit 60 no-op for add and duplicate.
-- [ ] 4.2 GREEN: `src/domain/bouquet/{types,limits,ids,add}.ts`.
-- [ ] 4.3 RED/GREEN: transform (clamp, normalize, scale clamp), recolor (no-op outside list), duplicate (index + 1, offset 40/40, clamped), delete (unknown id no-op) in `src/domain/bouquet/operations.ts`.
-- [ ] 4.4 RED/GREEN: reorder forward, backward, front, back with ends no-op; `setWrapping` replace or clear; `clearBouquet` in `src/domain/bouquet/operations.ts`.
-- [ ] 4.5 RED/GREEN: derived quantity per `(catalogId, colorId)` in `src/domain/bouquet/quantities.ts`; add property check that no stored quantity field exists.
-- [ ] 4.6 Write `docs/adr/0002-bouquet-model.md`.
+- [x] 4.1 RED: `src/domain/bouquet/operations.test.ts`: add (clamped, default colour, id `e{n}` = max suffix + 1), limit 60 no-op for add and duplicate.
+- [x] 4.2 GREEN: `src/domain/bouquet/{types,limits,ids,add}.ts`.
+- [x] 4.3 RED/GREEN: transform (clamp, normalize, scale clamp), recolor (no-op outside list), duplicate (index + 1, offset 40/40, clamped), delete (unknown id no-op) in `src/domain/bouquet/operations.ts`.
+- [x] 4.4 RED/GREEN: reorder forward, backward, front, back with ends no-op; `setWrapping` replace or clear; `clearBouquet` in `src/domain/bouquet/operations.ts`.
+- [x] 4.5 RED/GREEN: derived quantity per `(catalogId, colorId)` in `src/domain/bouquet/quantities.ts`; add property check that no stored quantity field exists.
+- [x] 4.6 Write `docs/adr/0002-bouquet-model.md`.
 
 ## Group 5: Bouquet validation (PR 5)
 
