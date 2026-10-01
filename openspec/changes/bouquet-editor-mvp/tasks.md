@@ -151,11 +151,11 @@ Traceability: draft-persistence (Safe handling of invalid data, validation half)
 
 Traceability: summary-pricing (Grouped summary, Single estimated total, Currency selection, USD rounding); catalog (Sample price disclosure data).
 
-- [ ] 6.1 RED: `src/domain/pricing/usd.test.ts`: 16 gives 0, 17 gives 1, 34000 gives 1000 cents; lines sum to total for tie cases (largest remainder, ties by summary order).
-- [ ] 6.2 GREEN: `src/domain/pricing/usd.ts` (`COP_PER_USD`, `toUsdCents`, `allocateUsdCents`).
-- [ ] 6.3 RED: `src/domain/pricing/summarize.test.ts`: groups flowers, foliage, wrapping, empty groups omitted, catalog order, quantity and line amounts, exactly one total.
-- [ ] 6.4 GREEN: `src/domain/pricing/summarize.ts`.
-- [ ] 6.5 Write `docs/adr/0006-pricing.md` (COP assumption pending user confirmation, rejected alternatives).
+- [x] 6.1 RED: `src/domain/pricing/usd.test.ts`: 16 gives 0, 17 gives 1, 34000 gives 1000 cents; lines sum to total for tie cases (largest remainder, ties by summary order).
+- [x] 6.2 GREEN: `src/domain/pricing/usd.ts` (`COP_PER_USD`, `toUsdCents`, `allocateUsdCents`).
+- [x] 6.3 RED: `src/domain/pricing/summarize.test.ts`: groups flowers, foliage, wrapping, empty groups omitted, catalog order, quantity and line amounts, exactly one total.
+- [x] 6.4 GREEN: `src/domain/pricing/summarize.ts`.
+- [x] 6.5 Write `docs/adr/0006-pricing.md` (COP assumption pending user confirmation, rejected alternatives).
 
 ## Group 7: Composition core (PR 7)
 

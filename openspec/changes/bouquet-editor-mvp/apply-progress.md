@@ -132,3 +132,12 @@ Branch `feat/bouquet-editor-05-parse` (base `feat/bouquet-editor-04-bouquet-ops`
 - RED: `parse.test.ts` failed on unresolved `./parse` import (no tests ran). GREEN: 103/103 in `src/domain/bouquet`.
 - Choices where the design is silent: a recolourable flower with `colorId` null or missing is rejected, and a fixed-colour flower with a non-null `colorId` is rejected; foliage ignores any `colorId`; unknown extra properties are dropped (fresh objects returned); `ID_PATTERN` is now exported from `ids.ts` and reused; ids need not be contiguous.
 - Rollback: `src/domain/bouquet/parse.ts`, `parse.test.ts`, the `parseBouquet` export, `ID_PATTERN` export.
+
+## Batch 6: Group 6, slice 6 "Pricing" (tasks 6.1 to 6.5)
+
+Split a/b (whole slice 456 lines). 6a: `feat/bouquet-editor-06a-usd-allocation` (base `feat/bouquet-editor-05-parse`), 120 lines, USD conversion and allocation. 6b: `feat/bouquet-editor-06-pricing` (base 6a), 341 lines, summarize, ADR 0006, this record. PR numbers in the PR bodies. 5/5 tasks of Group 6 complete (Groups 7 to 27 pending). Tests: 190 passing (160 before, 30 new).
+
+- RED: `usd.test.ts` and `summarize.test.ts` each failed on an unresolved import (no tests ran). GREEN: 18/18 then 30/30 in `src/domain/pricing`.
+- Choices where the design is silent: lines in catalog order, colours in the flower colour list order (that order is also the allocation tie-break); wrapping line has quantity 1 and null colour; unknown catalog ids are skipped; summary carries integers only (`lineCop`, `lineUsdCents`, `totalCop`, `totalUsdCents`, `unitCop`).
+- Design formula and spec examples verified: 16 gives 0, 17 gives 1, 34000 gives 1000, 3 x 1000 COP gives 88 cents (30, 29, 29), exhaustive half-up check to 20000, 2000 random line sets sum exactly.
+- Rollback: `src/domain/pricing`, `docs/adr/0006-pricing.md`.
