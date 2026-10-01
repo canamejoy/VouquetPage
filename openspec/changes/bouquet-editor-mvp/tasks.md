@@ -172,10 +172,10 @@ Traceability: compositions (Six deterministic compositions, Apply then edit, sha
 
 Traceability: compositions (Six deterministic compositions: Round, Compact, Asymmetric; Apply then edit).
 
-- [ ] 8.1 RED: `src/domain/composition/templates-a.test.ts`: splits (1,0), (0,1), (2,0), (1,1), (7,0), (20,40), (40,20), (60,0), (0,60), (1,59) and default set: one placement per item, anchors inside envelope, same input and seed deep-equal.
-- [ ] 8.2 GREEN: `src/domain/composition/templates/round.ts` and `compact.ts` with default sets; RED/GREEN assertions: Round mirrors about x = 0, Compact within 301 of `C`.
-- [ ] 8.3 GREEN: `src/domain/composition/templates/asymmetric.ts` with jitter and default set; test: farthest right anchor at least 1.5 times farthest left; two seeds differ.
-- [ ] 8.4 Add one inline golden snapshot per template (default set) in `src/domain/composition/templates-a.test.ts`.
+- [x] 8.1 RED: `src/domain/composition/templates-a.test.ts`: splits (1,0), (0,1), (2,0), (1,1), (7,0), (20,40), (40,20), (60,0), (0,60), (1,59) and default set: one placement per item, anchors inside envelope, same input and seed deep-equal.
+- [x] 8.2 GREEN: `src/domain/composition/templates/round.ts` and `compact.ts` with default sets; RED/GREEN assertions: Round mirrors about x = 0, Compact within 301 of `C`.
+- [x] 8.3 GREEN: `src/domain/composition/templates/asymmetric.ts` with jitter and default set; test: farthest right anchor at least 1.5 times farthest left; two seeds differ.
+- [x] 8.4 Add one inline golden snapshot per template (default set) in `src/domain/composition/templates-a.test.ts`.
 
 ## Group 9: Templates B and registry (PR 9)
 

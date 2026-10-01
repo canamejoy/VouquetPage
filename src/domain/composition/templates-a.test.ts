@@ -1,12 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { CATALOG } from '../catalog';
 import type { Point } from '../geometry';
+import { ASYMMETRIC_DEFAULT_ITEMS, generateAsymmetric } from './templates/asymmetric';
 import { generateCompact, COMPACT_DEFAULT_ITEMS } from './templates/compact';
 import { generateRound, ROUND_DEFAULT_ITEMS } from './templates/round';
 import type { CompositionGenerator, ElementPlacement, ItemRef } from './types';
 
 const SEED = 11;
 const C: Point = { x: 0, y: -540 };
+const F: Point = { x: -110, y: -480 };
 
 /** `flowers` flowers then `foliage` foliage items, cycling through the catalog. */
 function itemsOf(flowers: number, foliage: number): ItemRef[] {
@@ -127,6 +129,61 @@ describe('Round, default set', () => {
   });
 });
 
+const inAsymmetricEnvelope = (p: ElementPlacement) =>
+  p.position.x >= -447 && p.position.x <= 392 && p.position.y >= -973;
+
+describe('Asymmetric', () => {
+  it.each(SPLITS)('places one item per input inside its envelope for (%i, %i)', (n, m) => {
+    const items = itemsOf(n, m);
+    const placements = run(generateAsymmetric, items);
+    expect(placements).toHaveLength(n + m);
+    expect(placements.map(keyOf).sort()).toEqual(items.map(keyOf).sort());
+    expect(placements.every(inAsymmetricEnvelope)).toBe(true);
+  });
+
+  it('stays inside the envelope for every item count from 1 to 60 and every split', () => {
+    for (let total = 1; total <= 60; total += 1) {
+      for (let n = 0; n <= total; n += 1) {
+        const placements = run(generateAsymmetric, itemsOf(n, total - n));
+        expect(placements.every(inAsymmetricEnvelope)).toBe(true);
+      }
+    }
+  });
+
+  it('is deterministic per seed and varies between seeds', () => {
+    const items = itemsOf(8, 5);
+    expect(run(generateAsymmetric, items, 3)).toEqual(run(generateAsymmetric, items, 3));
+    expect(run(generateAsymmetric, items, 3)).not.toEqual(run(generateAsymmetric, items, 4));
+  });
+
+  it.each([
+    [1, [{ x: 0, y: 0 }]],
+    [
+      2,
+      [
+        { x: -60, y: 0 },
+        { x: 60, y: 0 },
+      ],
+    ],
+  ])('puts %i flowers on the focal point rule, within the jitter of 10', (n, offsets) => {
+    const anchors = run(generateAsymmetric, itemsOf(n, 0)).map((p) => p.position);
+    expect(anchors).toHaveLength(offsets.length);
+    for (const offset of offsets) {
+      const hit = anchors.some(
+        (a) => Math.abs(a.x - (F.x + offset.x)) <= 10 && Math.abs(a.y - (F.y + offset.y)) <= 10,
+      );
+      expect(hit).toBe(true);
+    }
+  });
+
+  it('leans right in the default set: the farthest right anchor is 1.5 times the farthest left', () => {
+    const anchors = run(generateAsymmetric, ASYMMETRIC_DEFAULT_ITEMS).map((p) => p.position);
+    const farthest = (side: (x: number) => boolean) =>
+      Math.max(...anchors.filter((a) => side(a.x)).map((a) => Math.hypot(a.x - F.x, a.y - F.y)));
+    expect(farthest((x) => x > F.x)).toBeGreaterThanOrEqual(1.5 * farthest((x) => x < F.x));
+  });
+});
+
 const describePlacements = (placements: ElementPlacement[]) =>
   placements.map(
     (p) =>
@@ -191,6 +248,30 @@ describe('golden layouts of the default sets', () => {
         "rose:peach 87,-590 r60 s0.7",
         "rose:peach 0,-640 r0 s0.7",
         "rose:white 0,-540 r0 s0.7",
+      ]
+    `);
+  });
+
+  it('Asymmetric', () => {
+    expect(describePlacements(run(generateAsymmetric, ASYMMETRIC_DEFAULT_ITEMS)))
+      .toMatchInlineSnapshot(`
+      [
+        "eucalyptus 105,-547 r49 s0.9",
+        "eucalyptus 58,-812 r43 s0.81",
+        "eucalyptus 301,-703 r54 s0.73",
+        "eucalyptus 260,-956 r53 s0.65",
+        "olive -283,-578 r244 s0.9",
+        "olive -232,-335 r212 s0.9",
+        "tulip:pink -325,-384 r209 s0.9",
+        "tulip:pink -242,-468 r250 s0.9",
+        "tulip:pink 313,-858 r60 s0.65",
+        "tulip:pink 247,-816 r56 s0.71",
+        "tulip:pink 170,-765 r48 s0.77",
+        "rose:blush 100,-692 r51 s0.83",
+        "rose:blush 24,-624 r51 s0.9",
+        "lily:white -196,-434 r242 s1",
+        "lily:white -30,-428 r121 s1",
+        "peony:blush -110,-569 r2 s1",
       ]
     `);
   });
