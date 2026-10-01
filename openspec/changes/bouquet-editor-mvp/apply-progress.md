@@ -84,7 +84,7 @@ Total tests: 37 passing (5 from slice 1, 32 new).
 
 ## Batch 3: Group 3, slice 3 "Catalog" (tasks 3.1 to 3.3)
 
-Branch `feat/bouquet-editor-03-catalog` (base `feat/bouquet-editor-02-geometry`). Status: 3/3 tasks of Group 3 complete (Groups 4 to 27 pending).
+Split a/b because the slice measured 419 changed lines (budget 400). 3a: branch `feat/bouquet-editor-03a-catalog-data` (base `feat/bouquet-editor-02-geometry`), PR #5, 378 lines, code and tests. 3b: branch `feat/bouquet-editor-03-catalog` (base 3a), PR #6, SDD progress record. Status: 3/3 tasks of Group 3 complete (Groups 4 to 27 pending).
 
 | Task | State | Evidence |
 |------|-------|----------|
