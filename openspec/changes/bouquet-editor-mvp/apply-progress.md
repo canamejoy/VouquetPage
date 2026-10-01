@@ -255,3 +255,13 @@ Split a/b/c, stacked. 19a `feat/bouquet-editor-19a-composition-picker` (base `fe
 - Deviations: one new key `palette.colors` (spoken colour list); `Button` now accepts `ref` (React 19 prop) so focus returns to Apply after Cancel; composition tab mounts `CompositionPicker` (extra file, not in the task list). Colour choice at add time is the first catalog colour; recolouring stays in the toolbar (slice 21); the palette only shows the available colours.
 - Visual: thumbnails rendered with resvg (scratch, not committed); palette layout and CSS were not seen (no browser).
 - Rollback: `src/ui/organisms/Palette`, `PaletteContainer*`, `InlineConfirm*`, `defaultAnchor*`, the `Button` ref typing and the `palette.colors` keys.
+
+## Batch 20: Group 20, slice 20 "Drag add" (tasks 20.1 to 20.3)
+
+Split a/b, stacked. 20a `feat/bouquet-editor-20a-drop-rule` (base `feat/bouquet-editor-19-palette`): `dropPosition` in `src/domain/geometry` and `DragGhost`. 20b `feat/bouquet-editor-20-drag-add` (base 20a): `usePaletteDrag`, wiring props, this record. PR numbers in the PR bodies. 3/3 tasks of Group 20 complete (Groups 21 to 27 pending). Tests: 641 passing (624 before, 17 new).
+
+- RED: `dropPosition` tests failed (not a function); `usePaletteDrag.test.tsx` failed on the unresolved import. GREEN after implementation; two test-arithmetic slips fixed (letterbox y, 8 px threshold).
+- Shared drag: the parent owns the SVG ref and calls `usePaletteDrag(state, dispatch, svgRef)`; it passes `drag` to `PaletteContainer` and `svgRef` to `EditorCanvasContainer` (optional prop), and renders `<DragGhost {...drag.ghost} />`. Slice 24 must compose exactly that.
+- Deviations: the drag-then-click suppression is a flag read by `PaletteContainer` (`drag.consumeDragClick()`); task 20.3 "wrapping drop ignores position" is satisfied by wrapping tiles not being draggable (tested).
+- Unverified without a device (user action U4): touch drag out of the future bottom sheet, `touch-action: pan-y` on tiles, ghost look.
+- Rollback: `usePaletteDrag*`, `DragGhost*`, `dropPosition`, the `drag` / `svgRef` / `onDragStart` / `onPointerDown` props.

@@ -27,13 +27,15 @@ const stateWith = (count: number, wrappingId: Bouquet['wrappingId'] = null): Edi
     elements: Array.from({ length: count }, (_, index) => fern(index)),
   });
 
+const noDrag = { ghost: null, onTilePointerDown: vi.fn(), consumeDragClick: () => false };
+
 let dispatch: ReturnType<typeof vi.fn<(action: EditorAction) => void>>;
 
 function setup(state: EditorState) {
   dispatch = vi.fn<(action: EditorAction) => void>();
   render(
     <I18nContext value={createTranslate('en')}>
-      <PaletteContainer state={state} dispatch={dispatch} />
+      <PaletteContainer state={state} dispatch={dispatch} drag={noDrag} />
     </I18nContext>,
   );
 }

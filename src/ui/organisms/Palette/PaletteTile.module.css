@@ -55,3 +55,8 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* The palette scrolls vertically, so a horizontal drag reaches Pointer Events. */
+.draggable {
+  touch-action: pan-y;
+}

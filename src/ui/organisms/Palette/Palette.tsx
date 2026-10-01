@@ -1,4 +1,11 @@
-import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import {
+  useId,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type PointerEvent,
+  type ReactNode,
+} from 'react';
 import { COLOR_HEX } from '@/domain/catalog';
 import type {
   Catalog,
@@ -31,6 +38,8 @@ interface PaletteProps {
   hasArrangement: boolean;
   canAdd: boolean;
   onAdd: (catalogId: FlowerId | FoliageId) => void;
+  /** A press on a flower or foliage tile; the caller decides whether it becomes a drag. */
+  onDragStart: (catalogId: FlowerId | FoliageId, event: PointerEvent) => void;
   onSelectWrapping: (wrappingId: WrappingId | null) => void;
   onApplyComposition: (compositionId: string) => void;
 }
@@ -42,6 +51,7 @@ export function Palette({
   hasArrangement,
   canAdd,
   onAdd,
+  onDragStart,
   onSelectWrapping,
   onApplyComposition,
 }: PaletteProps) {
@@ -85,6 +95,7 @@ export function Palette({
         }
         disabled={!canAdd}
         onClick={() => onAdd(item.id)}
+        onPointerDown={(event) => onDragStart(item.id, event)}
       />
     );
   };
@@ -102,6 +113,7 @@ export function Palette({
         }
         disabled={!canAdd}
         onClick={() => onAdd(item.id)}
+        onPointerDown={(event) => onDragStart(item.id, event)}
       />
     );
   };

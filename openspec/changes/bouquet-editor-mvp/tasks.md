@@ -285,9 +285,9 @@ Traceability: bouquet-editor (Create and add items: Tap to add, wrapping chosen 
 
 Traceability: bouquet-editor (Create and add items: Drag to add, Drop outside).
 
-- [ ] 20.1 RED: `src/ui/containers/usePaletteDrag.test.tsx`: movement over 8 px starts drag, release inside SVG adds at pointer (clamped), release outside adds nothing, `pointercancel` and `Escape` cancel.
-- [ ] 20.2 GREEN: `src/ui/containers/usePaletteDrag.ts` with ghost preview in `src/ui/molecules/DragGhost.tsx`.
-- [ ] 20.3 RED/GREEN: palette `touch-action` on the scroll axis only; wrapping drop ignores position.
+- [x] 20.1 RED: `src/ui/containers/usePaletteDrag.test.tsx`: movement over 8 px starts drag, release inside SVG adds at pointer (clamped), release outside adds nothing, `pointercancel` and `Escape` cancel.
+- [x] 20.2 GREEN: `src/ui/containers/usePaletteDrag.ts` with ghost preview in `src/ui/molecules/DragGhost.tsx`.
+- [x] 20.3 RED/GREEN: palette `touch-action` on the scroll axis only; wrapping drop ignores position.
 
 ## Group 21: Selection toolbar (PR 21)
 
