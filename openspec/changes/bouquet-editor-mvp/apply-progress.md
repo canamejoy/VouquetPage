@@ -184,3 +184,12 @@ Split a/b. 11a: `feat/bouquet-editor-11a-dictionaries` (base `feat/bouquet-edito
 - Choices where the design is silent: 82 flat dotted keys; `canvas.elementLabelFixedColor` for non-recolourable items; `resolveInitialLanguage(stored, browserLanguages)` is pure; `formatMoney(amount, currency, language)` takes COP whole pesos or USD cents.
 - `Intl` output matches the design exactly (non-breaking space after the code); pinned in `formatMoney.test.ts`.
 - Rollback: `src/ui/i18n`, `docs/adr/0007-localization.md`.
+
+## Batch 12: Group 12, slice 12 "Persistence" (tasks 12.1 to 12.5)
+
+Split a/b. 12a: `feat/bouquet-editor-12a-draft-autosave` (base `feat/bouquet-editor-11-i18n`), 289 lines, `DraftStore` port, draft store, autosave. 12b: `feat/bouquet-editor-12-persistence` (base 12a), preferences port and store, ADR 0008, this record. PR numbers in the PR bodies. 5/5 tasks of Group 12 complete (Groups 13 to 27 pending). Tests: 452 passing (429 before, 23 new).
+
+- RED: `draftStore.test.ts`, `autosave.test.ts` and `preferencesStore.test.ts` each failed on an unresolved import (no tests ran). GREEN: 10/10, 5/5 and 8/8.
+- Design adjusted: `DraftStore.load()` returns `Bouquet | null` (the store runs `parseBouquet` and removes invalid data), not `unknown`. `Language` and `Currency` moved to `application/preferences/ports.ts` (ui re-exports them). Keys `vouquet:draft:v1` and `vouquet:prefs:v1` (`{ language, currency }`).
+- `createDraftAutosave(store)` returns `{ schedule, flush, dispose }`; no React in this slice.
+- Rollback 12b: `src/application/preferences`, `preferencesStore*`, ADR 0008, the two re-export edits in `src/ui/i18n`.
