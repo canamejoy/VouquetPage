@@ -149,3 +149,12 @@ Split a/b/c/d (whole slice 1105 lines). 7a: `feat/bouquet-editor-07a-rng-rings` 
 - RED per pair observed: each test file failed on its unresolved import (`./rng`, `./rounding`, `./rings`, `./lanes`, `./order`, `./compose`; no tests ran). GREEN: 6, 45, 73, 75 (composition, with a 1891-split envelope test) and 11 in compose.test.ts.
 - Design silent or adjusted: `applyComposition(bouquet, template, catalog = CATALOG)` takes a `CompositionTemplate` (`id`, `seed`, `defaultItems`, `generate`); canonical ordering lives in `order.ts` (not `types.ts`); added `rounding.ts` (`roundAnchor`, `roundRotation`, `roundScale`); `applyComposition` also drops extra placements and clamps anchors. All design formulas held for every split of 60 items (T <= 5, no division by zero, anchors inside the bounds for Round and Compact).
 - Rollback: `src/domain/composition`, `src/domain/bouquet/compose*`, `docs/adr/0004-compositions.md`.
+
+## Batch 8: Group 8, slice 8 "Templates A" (tasks 8.1 to 8.4)
+
+Split a/b. 8a: `feat/bouquet-editor-08a-ring-templates` (base `feat/bouquet-editor-07-composition-core`), 307 lines, Round, Compact, shared ring layout. 8b: `feat/bouquet-editor-08-templates-a` (base 8a), Asymmetric and this record. PR numbers in the PR bodies. 4/4 tasks of Group 8 complete (Groups 9 to 27 pending). Tests: 322 passing (276 before, 46 new).
+
+- RED: `templates-a.test.ts` failed on unresolved template imports (no tests ran), once per unit. GREEN: 30/30 then 46/46.
+- Design held: every anchor of the three templates stays inside its envelope for all 1891 splits of 1 to 60 items; Asymmetric extremes x -447 and 392, y -973 (as designed); default-set ratio right to left 2.5 (needs 1.5). Compact scale floor 0.4 is never reached (0.42 at T = 5).
+- Choices where the design is silent: jitter applies to focal flowers too (three seeded draws per element: x, y, rotation); focal rotation is the slot direction (270 and 90 for a pair); foliage scale on each arm follows the arm's flower rule; each template file exports its default set.
+- Rollback: `src/domain/composition/templates`, `templates-a.test.ts`.
