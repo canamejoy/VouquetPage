@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Probe } from '@/ui/atoms/Probe';
+import { App } from '@/app/App';
+import { readLocalStorage } from '@/app/browserStorage';
 import '@/ui/styles/tokens.css';
 import '@/ui/styles/base.css';
 
@@ -11,6 +12,6 @@ if (!container) {
 
 createRoot(container).render(
   <StrictMode>
-    <Probe title="VOUQUET" />
+    <App storage={readLocalStorage()} />
   </StrictMode>,
 );
