@@ -175,3 +175,12 @@ Split a/b. 10a: `feat/bouquet-editor-10a-reducer` (base `feat/bouquet-editor-09-
 - RED: `reducer.test.ts` and `selectors.test.ts` each failed on an unresolved import (no tests ran), once per unit. GREEN: 32/32 then 36/36 in `src/application/editor`.
 - Choices where the design is silent: `composition/apply` carries `compositionId` (unknown id is a no-op); `element/select` with an unknown id is a no-op; `bouquet/clear` on an empty, unselected state is a no-op; `initialEditorState(bouquet?)` is the initial state; `selectLayerPosition` returns `{ position (1-based from the back), count }` or null. No React in this slice (Context arrives with the UI).
 - Rollback: `src/application/editor`, `docs/adr/0005-state-and-layers.md`.
+
+## Batch 11: Group 11, slice 11 "Localization" (tasks 11.1 to 11.6)
+
+Split a/b. 11a: `feat/bouquet-editor-11a-dictionaries` (base `feat/bouquet-editor-10-reducer`), 315 lines, dictionaries, `createTranslate`, `I18nProvider`, `useT`. 11b: `feat/bouquet-editor-11-i18n` (base 11a), `resolveInitialLanguage`, `formatMoney`, ADR 0007, this record. PR numbers in the PR bodies. 6/6 tasks of Group 11 complete (Groups 12 to 27 pending). Tests: 429 passing (406 before, 23 new).
+
+- RED: each test file failed on an unresolved import (no tests ran), once per file. GREEN: 7/7, then 16/16 more in `src/ui/i18n`. Removing a key from `es.ts` makes `npm run typecheck` fail (2 errors), confirming the compile-time check.
+- Choices where the design is silent: 82 flat dotted keys; `canvas.elementLabelFixedColor` for non-recolourable items; `resolveInitialLanguage(stored, browserLanguages)` is pure; `formatMoney(amount, currency, language)` takes COP whole pesos or USD cents.
+- `Intl` output matches the design exactly (non-breaking space after the code); pinned in `formatMoney.test.ts`.
+- Rollback: `src/ui/i18n`, `docs/adr/0007-localization.md`.

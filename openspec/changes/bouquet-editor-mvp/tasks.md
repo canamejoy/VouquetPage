@@ -201,12 +201,12 @@ Traceability: bouquet-model (Element operations, Layer order); bouquet-editor (C
 
 Traceability: localization (Two languages, Initial language and persistence, language half); summary-pricing (Currency formatting).
 
-- [ ] 11.1 RED: `src/ui/i18n/i18n.test.tsx`: `en.ts` source type and `es.ts` satisfies it, `{name}` interpolation, `useT()` defaults to Spanish without provider, `<html lang>` switches.
-- [ ] 11.2 GREEN: `src/ui/i18n/{en,es,I18nContext,useT}.ts(x)` with the initial keys (catalog, colour, common, summary labels).
-- [ ] 11.3 RED: `src/ui/i18n/initialLanguage.test.ts` (stored, else browser es or en, else Spanish).
-- [ ] 11.4 GREEN: `src/ui/i18n/initialLanguage.ts`.
-- [ ] 11.5 RED/GREEN: `formatMoney` in `src/ui/i18n/formatMoney.ts`, pinning runtime strings (`COP 84.000` and `USD 24,71` for es-CO; `COP 84,000` and `USD 24.71` for en-US); record any difference in the test.
-- [ ] 11.6 Write `docs/adr/0007-localization.md`.
+- [x] 11.1 RED: `src/ui/i18n/i18n.test.tsx`: `en.ts` source type and `es.ts` satisfies it, `{name}` interpolation, `useT()` defaults to Spanish without provider, `<html lang>` switches.
+- [x] 11.2 GREEN: `src/ui/i18n/{en,es,I18nContext,useT}.ts(x)` with the initial keys (catalog, colour, common, summary labels).
+- [x] 11.3 RED: `src/ui/i18n/initialLanguage.test.ts` (stored, else browser es or en, else Spanish).
+- [x] 11.4 GREEN: `src/ui/i18n/initialLanguage.ts`.
+- [x] 11.5 RED/GREEN: `formatMoney` in `src/ui/i18n/formatMoney.ts`, pinning runtime strings (`COP 84.000` and `USD 24,71` for es-CO; `COP 84,000` and `USD 24.71` for en-US); record any difference in the test.
+- [x] 11.6 Write `docs/adr/0007-localization.md`.
 
 ## Group 12: Persistence (PR 12)
 
