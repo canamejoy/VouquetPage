@@ -256,11 +256,11 @@ Traceability: bouquet-editor (Responsive tool layout foundations); design D9 ide
 
 Traceability: bouquet-editor (Selection and transforms: visible selection, element labels); bouquet-model (Layer order).
 
-- [ ] 17.1 RED: `src/ui/organisms/EditorCanvas/EditorCanvas.test.tsx`: draw order (background, wrapping back, stems, wrapping front, elements, overlay), wrapping `pointer-events: none`, `role="button"` elements named by item, colour, layer via `useT()`.
-- [ ] 17.2 GREEN: `src/ui/organisms/EditorCanvas/EditorCanvas.tsx` and `stems.ts`.
-- [ ] 17.3 RED/GREEN: selection overlay (frame, four corner handles, rotate handle, 44 px hit areas via `modelPerPixel`) in `src/ui/organisms/EditorCanvas/SelectionOverlay.tsx`; handles hidden with no selection.
-- [ ] 17.4 Add the accessible-label keys to `src/ui/i18n/en.ts` and `src/ui/i18n/es.ts`.
-- [ ] 17.5 Write `docs/adr/0001-svg-renderer.md`.
+- [x] 17.1 RED: `src/ui/organisms/EditorCanvas/EditorCanvas.test.tsx`: draw order (background, wrapping back, stems, wrapping front, elements, overlay), wrapping `pointer-events: none`, `role="button"` elements named by item, colour, layer via `useT()`.
+- [x] 17.2 GREEN: `src/ui/organisms/EditorCanvas/EditorCanvas.tsx` and `stems.ts`.
+- [x] 17.3 RED/GREEN: selection overlay (frame, four corner handles, rotate handle, 44 px hit areas via `modelPerPixel`) in `src/ui/organisms/EditorCanvas/SelectionOverlay.tsx`; handles hidden with no selection.
+- [x] 17.4 Add the accessible-label keys to `src/ui/i18n/en.ts` and `src/ui/i18n/es.ts`.
+- [x] 17.5 Write `docs/adr/0001-svg-renderer.md`.
 
 ## Group 18: Gestures (PR 18)
 

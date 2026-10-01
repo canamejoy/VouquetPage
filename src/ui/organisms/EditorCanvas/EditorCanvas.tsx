@@ -1,11 +1,12 @@
 import type { Bouquet, BouquetElement } from '@/domain/bouquet';
-import { COLOR_HEX, type Catalog } from '@/domain/catalog';
+import { COLOR_HEX, getFlower, getFoliage, type Catalog } from '@/domain/catalog';
 import { flowerIllustrations } from '@/ui/illustrations/flowers';
 import { foliageIllustrations } from '@/ui/illustrations/foliage';
 import { wrappingIllustrations } from '@/ui/illustrations/wrappings';
 import { useT } from '@/ui/i18n/useT';
 import type { PointerEvent } from 'react';
 import styles from './EditorCanvas.module.css';
+import { SelectionOverlay, type HandleKind } from './SelectionOverlay';
 import { stemPath } from './stems';
 
 interface EditorCanvasProps {
@@ -16,6 +17,7 @@ interface EditorCanvasProps {
   modelPerPixel: number;
   onBackgroundPointerDown?: (event: PointerEvent<SVGElement>) => void;
   onElementPointerDown?: (id: string, event: PointerEvent<SVGElement>) => void;
+  onHandlePointerDown?: (kind: HandleKind, event: PointerEvent<SVGElement>) => void;
 }
 
 const NO_POINTER = { pointerEvents: 'none' } as const;
@@ -23,10 +25,21 @@ const NO_POINTER = { pointerEvents: 'none' } as const;
 /** Renders the bouquet scene from its props alone (design D1); it holds no editor state. */
 export function EditorCanvas({
   bouquet,
+  catalog,
+  selectedId,
+  modelPerPixel,
   onBackgroundPointerDown,
   onElementPointerDown,
+  onHandlePointerDown,
 }: EditorCanvasProps) {
   const t = useT();
+  const selected = bouquet.elements.find((element) => element.id === selectedId);
+  const selectedSize = selected
+    ? (selected.kind === 'flower'
+        ? getFlower(selected.catalogId, catalog)
+        : getFoliage(selected.catalogId, catalog)
+      )?.size
+    : undefined;
   const wrapping = bouquet.wrappingId ? wrappingIllustrations[bouquet.wrappingId] : null;
   const count = bouquet.elements.length;
 
@@ -96,6 +109,14 @@ export function EditorCanvas({
           );
         })}
       </g>
+      {selected && selectedSize && (
+        <SelectionOverlay
+          element={selected}
+          size={selectedSize}
+          modelPerPixel={modelPerPixel}
+          {...(onHandlePointerDown && { onHandlePointerDown })}
+        />
+      )}
     </svg>
   );
 }

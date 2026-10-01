@@ -228,3 +228,12 @@ Split a/b. 16a: `feat/bouquet-editor-16a-tokens` (base `feat/bouquet-editor-15-w
 - Deviation: design hairline `#E3DED6` is 1.21:1 on paper, so control borders use added `--color-border-control` `#857F77` (3.58 and 3.96); hairline stays decorative. `vite.config.ts` gains `css.include` for `tokens.css` so the contrast test can read it.
 - `Probe` left in place (tasks do not remove it); `main.tsx` now imports the two stylesheets. Follow-up for app wiring: remove Probe.
 - Rollback: `src/ui/styles`, `src/ui/atoms` (except Probe), ADR 0011, the `main.tsx` and `vite.config.ts` edits.
+
+## Batch 17: Group 17, slice 17 "Canvas render" (tasks 17.1 to 17.5)
+
+Split a/b. 17a: `feat/bouquet-editor-17a-canvas-scene` (base `feat/bouquet-editor-16-tokens-atoms`), scene, stems, labels, ADR 0001. 17b: `feat/bouquet-editor-17-canvas-render` (base 17a), `SelectionOverlay`, this record. PR numbers in the PR bodies. 5/5 tasks of Group 17 complete (Groups 18 to 27 pending). Tests: 583 passing (561 before, 22 new).
+
+- RED: `EditorCanvas.test.tsx`, `stems.test.ts` and `SelectionOverlay.test.tsx` failed on unresolved imports (no tests ran); the full draw-order test failed on the missing `overlay` layer until 17.3. GREEN: 16 scene tests, 6 overlay tests. Keys for 17.4 already existed from slice 7 (checked in both dictionaries).
+- Stem rule: every element gets one quadratic stem from its anchor to the origin (control point at 0.7x, 0.5y), one green stroke, drawn between wrapping back and front. Scene verified with a scratch resvg render (not committed).
+- Callbacks for slice 18: `onBackgroundPointerDown(event)`, `onElementPointerDown(id, event)`, `onHandlePointerDown(kind: 'scale' | 'rotate', event)`; no SVG ref yet.
+- Rollback 17b: `SelectionOverlay*` and the overlay lines in `EditorCanvas.tsx`.

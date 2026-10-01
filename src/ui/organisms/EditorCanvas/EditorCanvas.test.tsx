@@ -61,20 +61,22 @@ const layers = (container: HTMLElement) =>
   );
 
 describe('EditorCanvas', () => {
-  it('draws background, wrapping back, stems, wrapping front and elements in that order', () => {
-    const { container } = renderCanvas();
+  it('draws background, wrapping back, stems, wrapping front, elements and overlay in that order', () => {
+    const { container } = renderCanvas({ selectedId: 'a' });
     expect(layers(container)).toEqual([
       'background',
       'wrapping-back',
       'stems',
       'wrapping-front',
       'elements',
+      'overlay',
     ]);
   });
 
-  it('omits the wrapping layers without a wrapping', () => {
+  it('omits the wrapping layers without a wrapping and the overlay without a selection', () => {
     const { container } = renderCanvas({
       bouquet: { ...bouquet, wrappingId: null },
+      selectedId: 'missing',
     });
     expect(layers(container)).toEqual(['background', 'stems', 'elements']);
   });
@@ -146,16 +148,21 @@ describe('EditorCanvas', () => {
     expect(within(screen.getByRole('group')).getAllByRole('button')).toHaveLength(3);
   });
 
-  it('reports presses on the background and on an element to the container', () => {
+  it('reports presses on the background, an element and a handle to the container', () => {
     const onBackgroundPointerDown = vi.fn();
     const onElementPointerDown = vi.fn();
+    const onHandlePointerDown = vi.fn();
     const { container } = renderCanvas({
+      selectedId: 'b',
       onBackgroundPointerDown,
       onElementPointerDown,
+      onHandlePointerDown,
     });
     fireEvent.pointerDown(container.querySelector('[data-layer="background"]') as Element);
     fireEvent.pointerDown(screen.getAllByRole('button')[1] as Element);
+    fireEvent.pointerDown(container.querySelector('[data-handle="rotate"]') as Element);
     expect(onBackgroundPointerDown).toHaveBeenCalledTimes(1);
     expect(onElementPointerDown).toHaveBeenCalledWith('b', expect.anything());
+    expect(onHandlePointerDown).toHaveBeenCalledWith('rotate', expect.anything());
   });
 });
