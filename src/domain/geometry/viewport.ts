@@ -1,4 +1,4 @@
-import type { Point } from './point';
+import { clampToBounds, type Point } from './point';
 
 /** Client-pixel rectangle of the rendered SVG element. Measured by the caller, never read here. */
 export interface Viewport {
@@ -28,4 +28,17 @@ export function clientToModel(client: Point, viewport: Viewport): Point {
     x: (client.x - viewport.left - offsetX) / scale + VIEW_BOX.x,
     y: (client.y - viewport.top - offsetY) / scale + VIEW_BOX.y,
   };
+}
+
+/**
+ * Where a drag released at `client` lands: the clamped model position, or null when the point is
+ * outside the SVG rect. The letterbox counts as inside; clamping brings it back to the bounds.
+ */
+export function dropPosition(client: Point, viewport: Viewport): Point | null {
+  const inside =
+    client.x >= viewport.left &&
+    client.x <= viewport.left + viewport.width &&
+    client.y >= viewport.top &&
+    client.y <= viewport.top + viewport.height;
+  return inside ? clampToBounds(clientToModel(client, viewport)) : null;
 }

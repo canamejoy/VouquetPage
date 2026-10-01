@@ -1,4 +1,4 @@
-import { clientToModel, modelPerPixel } from './viewport';
+import { clientToModel, dropPosition, modelPerPixel } from './viewport';
 import { normalizeAngle } from './angle';
 import { MODEL_BOUNDS, clampToBounds } from './point';
 import type { Viewport } from './viewport';
@@ -83,5 +83,25 @@ describe('clampToBounds', () => {
     expect(clampToBounds({ x: -900, y: 20 })).toEqual({ x: -500, y: 20 });
     expect(clampToBounds({ x: 900, y: -2000 })).toEqual({ x: 500, y: -1000 });
     expect(clampToBounds({ x: 0, y: 999 })).toEqual({ x: 0, y: 300 });
+  });
+});
+
+describe('dropPosition', () => {
+  it('converts a point inside the viewport to the model position', () => {
+    expect(dropPosition({ x: 250, y: 325 }, exact)).toEqual({ x: 0, y: -350 });
+  });
+
+  it('counts the whole rect as inside, including the letterbox, and clamps to the bounds', () => {
+    // wide: the left side bar maps outside the model bounds, so the x clamps to -500
+    expect(dropPosition({ x: 150, y: 400 }, wide)).toEqual({ x: -500, y: -300 });
+  });
+
+  it.each([
+    { x: -1, y: 100 },
+    { x: 501, y: 100 },
+    { x: 100, y: -1 },
+    { x: 100, y: 651 },
+  ])('returns null outside the viewport at %o', (point) => {
+    expect(dropPosition(point, exact)).toBeNull();
   });
 });
