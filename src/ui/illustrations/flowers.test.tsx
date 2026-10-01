@@ -1,37 +1,10 @@
-import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { CATALOG } from '@/domain/catalog';
 import { flowerIllustrations } from './flowers';
-
-const SHAPES = 'path, ellipse, circle, rect, polygon';
+import { extent, renderIllustration, SHAPES } from './svg.testutil';
 
 function renderFlower(id: keyof typeof flowerIllustrations) {
-  const Flower = flowerIllustrations[id];
-  const { container } = render(
-    <svg>
-      <Flower />
-    </svg>,
-  );
-  const group = container.querySelector('svg > g');
-  if (!group) throw new Error(`${id} did not render a <g>`);
-  return group;
-}
-
-/** Axis-aligned extent of one shape. Paths use absolute coordinates only, so numbers pair up. */
-function extent(shape: Element): { x: number[]; y: number[] } {
-  const num = (name: string) => Number(shape.getAttribute(name) ?? 0);
-  if (shape.tagName === 'ellipse' || shape.tagName === 'circle') {
-    const rx = num(shape.tagName === 'circle' ? 'r' : 'rx');
-    const ry = num(shape.tagName === 'circle' ? 'r' : 'ry');
-    return { x: [num('cx') - rx, num('cx') + rx], y: [num('cy') - ry, num('cy') + ry] };
-  }
-  const d = shape.getAttribute('d') ?? '';
-  expect(d).not.toMatch(/[a-z]/); // relative commands would break the pairing below
-  const values = (d.match(/-?\d*\.?\d+/g) ?? []).map(Number);
-  return {
-    x: values.filter((_, i) => i % 2 === 0),
-    y: values.filter((_, i) => i % 2 === 1),
-  };
+  return renderIllustration(id, flowerIllustrations[id]);
 }
 
 const flowers = CATALOG.flowers;
