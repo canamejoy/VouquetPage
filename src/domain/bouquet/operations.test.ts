@@ -3,7 +3,15 @@ import { MODEL_BOUNDS, SCALE_MAX, SCALE_MIN } from '../geometry';
 import { addElement } from './add';
 import { nextElementId } from './ids';
 import { MAX_ELEMENTS } from './limits';
-import { deleteElement, recolorElement, transformElement } from './operations';
+import {
+  clearBouquet,
+  deleteElement,
+  duplicateElement,
+  recolorElement,
+  reorderElement,
+  setWrapping,
+  transformElement,
+} from './operations';
 import { emptyBouquet } from './types';
 import type { Bouquet, BouquetElement, FlowerElement } from './types';
 
@@ -190,5 +198,99 @@ describe('deleteElement', () => {
 
   it('is a no-op for an unknown id', () => {
     expect(deleteElement(base, 'e9')).toBe(base);
+  });
+});
+
+describe('duplicateElement', () => {
+  it('inserts a copy directly above the original with a new id and a 40/40 offset', () => {
+    const base = withElements([flower('e1'), flower('e2', { catalogId: 'tulip' })]);
+    const next = duplicateElement(base, 'e1');
+    expect(next.elements.map((e) => e.id)).toEqual(['e1', 'e3', 'e2']);
+    expect(next.elements[1]).toEqual({ ...flower('e1'), id: 'e3', position: { x: 40, y: -160 } });
+  });
+
+  it('keeps colour, rotation and scale and clamps the offset anchor', () => {
+    const base = withElements([
+      flower('e1', { position: { x: 490, y: 290 }, rotation: 30, scale: 2, colorId: 'white' }),
+    ]);
+    expect(duplicateElement(base, 'e1').elements[1]).toEqual({
+      ...base.elements[0],
+      id: 'e2',
+      position: { x: MODEL_BOUNDS.maxX, y: MODEL_BOUNDS.maxY },
+    });
+  });
+
+  it('copies foliage', () => {
+    const base = addElement(emptyBouquet(), 'fern', { x: 0, y: 0 });
+    expect(duplicateElement(base, 'e1').elements[1]).toMatchObject({
+      id: 'e2',
+      kind: 'foliage',
+      catalogId: 'fern',
+    });
+  });
+
+  it('leaves the bouquet unchanged at the limit', () => {
+    const full = fullBouquet();
+    expect(duplicateElement(full, 'e1')).toBe(full);
+  });
+
+  it('is a no-op for an unknown id', () => {
+    const base = withElements([flower('e1')]);
+    expect(duplicateElement(base, 'e9')).toBe(base);
+  });
+});
+
+describe('reorderElement', () => {
+  const abc = withElements([flower('A'), flower('B'), flower('C')]);
+  const order = (bouquet: Bouquet): string[] => bouquet.elements.map((e) => e.id);
+
+  it('brings an element forward one step', () => {
+    expect(order(reorderElement(abc, 'A', 'forward'))).toEqual(['B', 'A', 'C']);
+  });
+
+  it('sends an element backward one step', () => {
+    expect(order(reorderElement(abc, 'C', 'backward'))).toEqual(['A', 'C', 'B']);
+  });
+
+  it('moves an element to the front or the back', () => {
+    expect(order(reorderElement(abc, 'A', 'front'))).toEqual(['B', 'C', 'A']);
+    expect(order(reorderElement(abc, 'C', 'back'))).toEqual(['C', 'A', 'B']);
+  });
+
+  it('is a no-op at the ends', () => {
+    expect(reorderElement(abc, 'C', 'forward')).toBe(abc);
+    expect(reorderElement(abc, 'C', 'front')).toBe(abc);
+    expect(reorderElement(abc, 'A', 'backward')).toBe(abc);
+    expect(reorderElement(abc, 'A', 'back')).toBe(abc);
+  });
+
+  it('is a no-op for an unknown id', () => {
+    expect(reorderElement(abc, 'Z', 'front')).toBe(abc);
+  });
+});
+
+describe('setWrapping', () => {
+  const base = { ...withElements([flower('e1')]), wrappingId: 'kraft' as const };
+
+  it('replaces the previous wrapping and keeps the elements', () => {
+    const next = setWrapping(base, 'ivory');
+    expect(next.wrappingId).toBe('ivory');
+    expect(next.elements).toBe(base.elements);
+  });
+
+  it('clears the wrapping with null and keeps the elements', () => {
+    const next = setWrapping(base, null);
+    expect(next.wrappingId).toBeNull();
+    expect(next.elements).toBe(base.elements);
+  });
+
+  it('is a no-op for an id that is not a wrapping', () => {
+    expect(setWrapping(base, 'rose' as never)).toBe(base);
+  });
+});
+
+describe('clearBouquet', () => {
+  it('returns an empty bouquet without wrapping', () => {
+    expect(clearBouquet()).toEqual({ schemaVersion: 1, elements: [], wrappingId: null });
   });
 });
