@@ -2,30 +2,27 @@ schema: spec-driven
 context: |
   Project: VOUQUET (VouquetPage), interactive web platform for designing flower bouquets.
   MVP: 2D bouquet editor. Repo: github.com/canamejoy/VouquetPage (branch main).
-  Status: greenfield, no source code, no package.json, no test runner installed.
-  Intended stack (NOT yet installed, to be confirmed in explore/design): React, TypeScript (strict), Vite,
-  deploy to Cloudflare from GitHub. 2D rendering tech (Canvas/Konva/Fabric.js/HTML+CSS) is undecided.
+  Status: scaffolded in slice 1 (React 19, TypeScript strict, Vite 8, Vitest 5, ESLint, Prettier).
+  Deploy to Cloudflare from GitHub arrives in slice 26. 2D rendering: SVG (design D1).
   Artifact language: English, neutral professional register.
 persistence: hybrid
-strict_tdd: false
+strict_tdd: true
 strict_tdd_intent: true
 strict_tdd_note: >
-  User configuration requests Strict TDD, but zero projects are discovered and no workspace-level
-  test command exists, so the effective value is false. Re-run sdd-init (or flip this value) after
-  the project is scaffolded and a test command (Vitest is a candidate, not a decision) is chosen in design.
+  Enabled in slice 1 (scaffold): Vitest 5 runs via `npm test` and `npm run check` is green.
+  Re-run sdd-init to refresh the cached testing capabilities.
 projects: []
 testing:
-  runner: null
-  runner_candidate: vitest   # candidate only; to be decided in design
-  test_command: null
+  runner: vitest
+  test_command: npm test
   layers:
-    unit: false
-    integration: false
+    unit: true
+    integration: true
     e2e: false
   coverage: false
-  linter: false
-  type_checker: false   # TypeScript strict intended
-  formatter: false
+  linter: true
+  type_checker: true
+  formatter: true
 rules:
   proposal:
     - Do not decide the 2D rendering technology without a documented comparison.

@@ -102,15 +102,15 @@ Lands `main` so PR branches have a base. Contents: `.gitignore` and `openspec/`.
 
 Traceability: deployment (Production build); design D10, enables Strict TDD per `rules.tasks`.
 
-- [ ] 1.1 Create `package.json`, `tsconfig.json`, `vite.config.ts`, `index.html`, `.nvmrc` (24), `.prettierrc` with scripts from D10, alias `@/`, strict flags.
-- [ ] 1.2 TypeScript 7 probe: install `typescript@7.0.2`, `typescript-eslint`, Vitest, Vite; accept only with no peer error and no `--force`, `--legacy-peer-deps` or `overrides`. Otherwise pin highest major in `npm view typescript-eslint peerDependencies` and repeat.
-- [ ] 1.3 RED: write `src/ui/atoms/Probe.test.tsx` (renders, queries by role); run, see it fail.
-- [ ] 1.4 GREEN: add `src/ui/atoms/Probe.tsx`, `src/main.tsx`, `src/test/setup.ts` (jest-dom).
-- [ ] 1.5 RED/GREEN jsdom probe in `src/test/pointer-probe.test.ts`: `PointerEvent` dispatch and `setPointerCapture` support; add the stub in `src/test/setup.ts` only if missing.
-- [ ] 1.6 Create `eslint.config.js`: `no-restricted-imports` per layer (D5), `Math.random` ban in domain and application, atoms/molecules/organisms barred from application contexts and containers.
-- [ ] 1.7 Create `.github/workflows/ci.yml` (read-only permissions, Node from `.nvmrc`, `npm ci`, `npm run check`, no secrets).
-- [ ] 1.8 Run `npm run check` green; flip `strict_tdd: true`, `testing.runner: vitest`, `testing.test_command: npm test`, layers and tool flags in `openspec/config.yaml`; hand off to orchestrator to re-run `sdd-init`.
-- [ ] 1.9 Write `docs/adr/0009-testing-stack-and-typescript.md` with the TypeScript probe outcome and a minimal `README.md` (quick start and scripts).
+- [x] 1.1 Create `package.json`, `tsconfig.json`, `vite.config.ts`, `index.html`, `.nvmrc` (24), `.prettierrc` with scripts from D10, alias `@/`, strict flags.
+- [x] 1.2 TypeScript 7 probe: install `typescript@7.0.2`, `typescript-eslint`, Vitest, Vite; accept only with no peer error and no `--force`, `--legacy-peer-deps` or `overrides`. Otherwise pin highest major in `npm view typescript-eslint peerDependencies` and repeat.
+- [x] 1.3 RED: write `src/ui/atoms/Probe.test.tsx` (renders, queries by role); run, see it fail.
+- [x] 1.4 GREEN: add `src/ui/atoms/Probe.tsx`, `src/main.tsx`, `src/test/setup.ts` (jest-dom).
+- [x] 1.5 RED/GREEN jsdom probe in `src/test/pointer-probe.test.ts`: `PointerEvent` dispatch and `setPointerCapture` support; add the stub in `src/test/setup.ts` only if missing.
+- [x] 1.6 Create `eslint.config.js`: `no-restricted-imports` per layer (D5), `Math.random` ban in domain and application, atoms/molecules/organisms barred from application contexts and containers.
+- [x] 1.7 Create `.github/workflows/ci.yml` (read-only permissions, Node from `.nvmrc`, `npm ci`, `npm run check`, no secrets).
+- [x] 1.8 Run `npm run check` green; flip `strict_tdd: true`, `testing.runner: vitest`, `testing.test_command: npm test`, layers and tool flags in `openspec/config.yaml`; hand off to orchestrator to re-run `sdd-init`.
+- [x] 1.9 Write `docs/adr/0009-testing-stack-and-typescript.md` with the TypeScript probe outcome and a minimal `README.md` (quick start and scripts).
 
 ## Group 2: Geometry (PR 2)
 
