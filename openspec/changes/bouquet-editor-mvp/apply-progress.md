@@ -135,7 +135,7 @@ Branch `feat/bouquet-editor-05-parse` (base `feat/bouquet-editor-04-bouquet-ops`
 
 ## Batch 6: Group 6, slice 6 "Pricing" (tasks 6.1 to 6.5)
 
-Branch `feat/bouquet-editor-06-pricing` (base `feat/bouquet-editor-05-parse`), single PR. 5/5 tasks of Group 6 complete (Groups 7 to 27 pending). Tests: 190 passing (160 before, 30 new).
+Split a/b (whole slice 456 lines). 6a: `feat/bouquet-editor-06a-usd-allocation` (base `feat/bouquet-editor-05-parse`), 120 lines, USD conversion and allocation. 6b: `feat/bouquet-editor-06-pricing` (base 6a), 341 lines, summarize, ADR 0006, this record. PR numbers in the PR bodies. 5/5 tasks of Group 6 complete (Groups 7 to 27 pending). Tests: 190 passing (160 before, 30 new).
 
 - RED: `usd.test.ts` and `summarize.test.ts` each failed on an unresolved import (no tests ran). GREEN: 18/18 then 30/30 in `src/domain/pricing`.
 - Choices where the design is silent: lines in catalog order, colours in the flower colour list order (that order is also the allocation tie-break); wrapping line has quantity 1 and null colour; unknown catalog ids are skipped; summary carries integers only (`lineCop`, `lineUsdCents`, `totalCop`, `totalUsdCents`, `unitCop`).
