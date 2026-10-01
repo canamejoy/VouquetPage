@@ -11,5 +11,7 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
+    // Lets tokens.test.ts read the real tokens.css; Vitest otherwise replaces plain CSS with an empty string.
+    css: { include: [/tokens\.css/] },
   },
 });
