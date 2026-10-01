@@ -4,7 +4,7 @@ import { flowerIllustrations } from '@/ui/illustrations/flowers';
 import { foliageIllustrations } from '@/ui/illustrations/foliage';
 import { wrappingIllustrations } from '@/ui/illustrations/wrappings';
 import { useT } from '@/ui/i18n/useT';
-import type { PointerEvent, Ref } from 'react';
+import type { KeyboardEvent, PointerEvent, Ref } from 'react';
 import styles from './EditorCanvas.module.css';
 import { SelectionOverlay, type HandleKind } from './SelectionOverlay';
 import { stemPath } from './stems';
@@ -22,6 +22,10 @@ interface EditorCanvasProps {
   onPointerMove?: (event: PointerEvent<SVGElement>) => void;
   onPointerUp?: (event: PointerEvent<SVGElement>) => void;
   onPointerCancel?: (event: PointerEvent<SVGElement>) => void;
+  /** Key presses bubble from the focused element to the svg. */
+  onKeyDown?: (event: KeyboardEvent<SVGElement>) => void;
+  /** Focusing an element with the keyboard selects it. */
+  onElementFocus?: (id: string) => void;
   /** The container measures the rendered svg; React 19 takes `ref` as a plain prop. */
   ref?: Ref<SVGSVGElement>;
 }
@@ -40,6 +44,8 @@ export function EditorCanvas({
   onPointerMove,
   onPointerUp,
   onPointerCancel,
+  onKeyDown,
+  onElementFocus,
   ref,
 }: EditorCanvasProps) {
   const t = useT();
@@ -69,6 +75,9 @@ export function EditorCanvas({
       preserveAspectRatio="xMidYMid meet"
       role="group"
       aria-label={t('canvas.label')}
+      // Focusable by script only, so focus has somewhere sensible to go after a delete.
+      tabIndex={-1}
+      onKeyDown={onKeyDown}
       // Touch drags on the design area must reach Pointer Events, not scroll the page (D1).
       style={{ touchAction: 'none' }}
       // The viewBox is letterboxed, so presses outside the background rect land on the svg itself.
@@ -115,7 +124,9 @@ export function EditorCanvas({
               key={element.id}
               role="button"
               tabIndex={0}
+              data-element-id={element.id}
               aria-label={labelOf(element, index)}
+              onFocus={() => onElementFocus?.(element.id)}
               onPointerDown={(event) => onElementPointerDown?.(element.id, event)}
               transform={`translate(${position.x} ${position.y}) rotate(${rotation}) scale(${scale})`}
               style={

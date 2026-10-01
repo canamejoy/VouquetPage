@@ -4,6 +4,11 @@
   height: 100%;
 }
 
+/* Programmatic focus target only; the focused element carries the visible ring. */
+.canvas:focus {
+  outline: none;
+}
+
 .background {
   fill: var(--color-paper);
 }

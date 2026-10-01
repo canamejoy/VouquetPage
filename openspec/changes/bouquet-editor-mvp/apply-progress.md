@@ -275,3 +275,13 @@ Split a/b, stacked. 21a `feat/bouquet-editor-21a-toolbar-organism` (base `feat/b
 - Deviation: task 21.5 needed no new keys (all `toolbar.*` and `color.*` keys already existed).
 - Unverified without a browser: row widths 292 px and 340 px are computed (44 px targets, 4 px gaps and padding), not rendered; swatch ring look.
 - Rollback: `SelectionToolbar*`, `SelectionToolbarContainer*`, `dockSide*`.
+
+## Batch 22: Group 22, slice 22 "Keyboard" (tasks 22.1 to 22.3)
+
+Split a/b, stacked. 22a `feat/bouquet-editor-22a-shortcut-map` (base `feat/bouquet-editor-21-toolbar`): pure `shortcutFor` map and the shared step constants (`ROTATE_STEP_DEGREES`, `SCALE_STEP`, `NUDGE_STEP`, `NUDGE_STEP_LARGE`, `stepScale` now in `src/domain/geometry`). 22b `feat/bouquet-editor-22-keyboard` (base 22a): `useEditorShortcuts`, `LiveRegion`, canvas `onKeyDown` / `onElementFocus`, `announce.*` keys, this record. 3/3 tasks of Group 22 complete (Groups 23 to 27 pending). Tests: 726 passing (684 before, 42 new).
+
+- RED: both new test files failed on unresolved imports (no tests ran); GREEN after implementation. Real catch: the reducer returns a new bouquet for a clamped transform, so a no-op nudge at the bounds was dispatched and announced until `isNoOp` compared the transform fields.
+- Files live in `src/ui/containers/keyboard/` (not `containers/useEditorShortcuts.ts`) to match the focused command. `EditorCanvasContainer` now calls the hook and renders `LiveRegion`; slice 24 needs nothing extra. `gesturing` is still not exposed by `useTransformGesture` (not touched here); slice 24 must supply it.
+- `prefers-reduced-motion` is already handled by the `--motion-duration` token; the new code adds no motion.
+- Unverified without a browser or assistive technology: real screen-reader output, OS or browser shortcut conflicts, focus ring look.
+- Rollback: `src/ui/containers/keyboard`, `LiveRegion*`, the canvas key and focus props, `announce.*` keys.

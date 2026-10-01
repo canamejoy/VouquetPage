@@ -85,6 +85,13 @@ export const en = {
   'toolbar.delete': 'Delete',
   'toolbar.colors': 'Colour',
 
+  'announce.moved': '{item} moved to {x}, {y}',
+  'announce.rotated': '{item} rotated to {degrees} degrees',
+  'announce.resized': '{item} resized to {percent} percent',
+  'announce.layer': '{item} moved to layer {position} of {count}',
+  'announce.duplicated': '{item} duplicated',
+  'announce.deleted': '{item} deleted',
+
   'summary.title': 'Summary',
   'summary.empty': 'Your bouquet is empty.',
   'summary.group.flowers': 'Flowers',
