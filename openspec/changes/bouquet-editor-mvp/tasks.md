@@ -275,11 +275,11 @@ Traceability: bouquet-editor (Selection and transforms: Move by touch, Rotate an
 
 Traceability: bouquet-editor (Create and add items: Tap to add, wrapping chosen from palette); compositions (Apply then edit confirmation); catalog (Sample price disclosure).
 
-- [ ] 19.1 RED: `src/ui/organisms/Palette/Palette.test.tsx`: tabs (Compositions, Flowers, Foliage, Wrapping), tap adds and selects, wrapping tab with "None" tile, composition tab default while no flowers or foliage.
-- [ ] 19.2 GREEN: `src/ui/organisms/Palette/{Palette,PaletteTile}.tsx`, `src/ui/containers/PaletteContainer.tsx`.
-- [ ] 19.3 RED/GREEN: golden-angle default anchor `defaultAnchor(k)` in `src/domain/geometry/defaultAnchor.ts` (at most 163 units, inside bounds).
-- [ ] 19.4 RED/GREEN: inline confirm (`src/ui/molecules/InlineConfirm.tsx`) before applying a composition to a bouquet with flowers or foliage; Cancel leaves the bouquet unchanged; empty needs none.
-- [ ] 19.5 Add palette keys to `src/ui/i18n/en.ts` and `src/ui/i18n/es.ts`.
+- [x] 19.1 RED: `src/ui/organisms/Palette/Palette.test.tsx`: tabs (Compositions, Flowers, Foliage, Wrapping), tap adds and selects, wrapping tab with "None" tile, composition tab default while no flowers or foliage.
+- [x] 19.2 GREEN: `src/ui/organisms/Palette/{Palette,PaletteTile}.tsx`, `src/ui/containers/PaletteContainer.tsx`.
+- [x] 19.3 RED/GREEN: golden-angle default anchor `defaultAnchor(k)` in `src/domain/geometry/defaultAnchor.ts` (at most 163 units, inside bounds).
+- [x] 19.4 RED/GREEN: inline confirm (`src/ui/molecules/InlineConfirm.tsx`) before applying a composition to a bouquet with flowers or foliage; Cancel leaves the bouquet unchanged; empty needs none.
+- [x] 19.5 Add palette keys to `src/ui/i18n/en.ts` and `src/ui/i18n/es.ts`.
 
 ## Group 20: Drag add (PR 20)
 
