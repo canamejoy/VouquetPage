@@ -13,6 +13,16 @@ export interface GestureStart {
 export const SCALE_MIN = 0.4;
 export const SCALE_MAX = 2.5;
 
+/** Step sizes shared by the selection toolbar and the keyboard shortcuts. */
+export const ROTATE_STEP_DEGREES = 15;
+export const SCALE_STEP = 0.1;
+export const NUDGE_STEP = 10;
+export const NUDGE_STEP_LARGE = 50;
+
+/** One scale step up (+1) or down (-1), rounded so repeated steps do not accumulate float noise. */
+export const stepScale = (scale: number, direction: 1 | -1): number =>
+  Math.round((scale + direction * SCALE_STEP) * 100) / 100;
+
 /** Anchor follows the pointer delta, clamped to the model bounds. */
 export function moveGesture(start: GestureStart, pointer: Point): Point {
   return clampToBounds({

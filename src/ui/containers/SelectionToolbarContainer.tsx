@@ -7,7 +7,14 @@ import {
 } from '@/application/editor/selectors';
 import type { EditorState } from '@/application/editor/state';
 import { getFlower } from '@/domain/catalog';
-import { dockSide, SCALE_MAX, SCALE_MIN, type DockSide } from '@/domain/geometry';
+import {
+  dockSide,
+  ROTATE_STEP_DEGREES,
+  SCALE_MAX,
+  SCALE_MIN,
+  stepScale,
+  type DockSide,
+} from '@/domain/geometry';
 import { SelectionToolbar } from '@/ui/organisms/SelectionToolbar/SelectionToolbar';
 
 interface SelectionToolbarContainerProps {
@@ -16,9 +23,6 @@ interface SelectionToolbarContainerProps {
   /** True while a canvas gesture runs: the toolbar keeps its dock side and ignores pointer events. */
   gesturing: boolean;
 }
-
-const ROTATE_STEP_DEGREES = 15;
-const SCALE_STEP = 0.1;
 
 /** Connects the selected element to the presentational toolbar; renders nothing without a selection. */
 export function SelectionToolbarContainer({
@@ -61,8 +65,7 @@ export function SelectionToolbarContainer({
         dispatch({
           type: 'element/transform',
           id,
-          // Rounded so repeated 0.1 steps do not accumulate floating-point noise.
-          change: { scale: Math.round((element.scale + direction * SCALE_STEP) * 100) / 100 },
+          change: { scale: stepScale(element.scale, direction) },
         })
       }
       onReorder={(direction) => dispatch({ type: 'element/reorder', id, direction })}
