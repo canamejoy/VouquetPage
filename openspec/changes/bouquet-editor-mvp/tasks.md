@@ -193,9 +193,9 @@ Traceability: bouquet-model (Element operations, Layer order); bouquet-editor (C
 
 - [x] 10.1 RED: `src/application/editor/reducer.test.ts` for every action in D5 including no-op cases (limit, unknown id, bad colour, ends), selection on add and duplicate, `bouquet/clear` resets wrapping and selection, `composition/apply` clears selection.
 - [x] 10.2 GREEN: `src/application/editor/{state,actions,reducer}.ts`.
-- [ ] 10.3 RED/GREEN: `selectSelectedElement`, `selectLayerPosition`, `selectCanAdd`, `selectSummary` in `src/application/editor/selectors.ts`.
+- [x] 10.3 RED/GREEN: `selectSelectedElement`, `selectLayerPosition`, `selectCanAdd`, `selectSummary` in `src/application/editor/selectors.ts`.
 - [x] 10.4 RED/GREEN: manual-only flow (add and move freely with no composition) in `src/application/editor/reducer.test.ts`.
-- [ ] 10.5 Write `docs/adr/0005-state-and-layers.md`.
+- [x] 10.5 Write `docs/adr/0005-state-and-layers.md`.
 
 ## Group 11: Localization (PR 11)
 
