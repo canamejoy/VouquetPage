@@ -247,10 +247,10 @@ Traceability: catalog (Catalog size and categories: five wrappings); bouquet-mod
 
 Traceability: bouquet-editor (Responsive tool layout foundations); design D9 identity; no spec behaviour beyond styling.
 
-- [ ] 16.1 Create `src/ui/styles/tokens.css` (paper, surface, ink, muted, hairline, accent, danger, serif and sans stacks, focus ring, reduced motion) and global base in `src/ui/styles/base.css`.
-- [ ] 16.2 RED/GREEN: `src/ui/atoms/Button` (44 px target, accessible name), `IconButton`, `SegmentedSwitch` with tests by role.
-- [ ] 16.3 RED/GREEN: hand-authored icons in `src/ui/atoms/icons.tsx` (1.5 px stroke) with labels via `useT()`.
-- [ ] 16.4 Write `docs/adr/0011-styling-and-identity.md`.
+- [x] 16.1 Create `src/ui/styles/tokens.css` (paper, surface, ink, muted, hairline, accent, danger, serif and sans stacks, focus ring, reduced motion) and global base in `src/ui/styles/base.css`.
+- [x] 16.2 RED/GREEN: `src/ui/atoms/Button` (44 px target, accessible name), `IconButton`, `SegmentedSwitch` with tests by role.
+- [x] 16.3 RED/GREEN: hand-authored icons in `src/ui/atoms/icons.tsx` (1.5 px stroke) with labels via `useT()`.
+- [x] 16.4 Write `docs/adr/0011-styling-and-identity.md`.
 
 ## Group 17: Canvas render (PR 17)
 
