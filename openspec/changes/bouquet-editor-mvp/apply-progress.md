@@ -158,3 +158,12 @@ Split a/b. 8a: `feat/bouquet-editor-08a-ring-templates` (base `feat/bouquet-edit
 - Design held: every anchor of the three templates stays inside its envelope for all 1891 splits of 1 to 60 items; Asymmetric extremes x -447 and 392, y -973 (as designed); default-set ratio right to left 2.5 (needs 1.5). Compact scale floor 0.4 is never reached (0.42 at T = 5).
 - Choices where the design is silent: jitter applies to focal flowers too (three seeded draws per element: x, y, rotation); focal rotation is the slot direction (270 and 90 for a pair); foliage scale on each arm follows the arm's flower rule; each template file exports its default set.
 - Rollback: `src/domain/composition/templates`, `templates-a.test.ts`.
+
+## Batch 9: Group 9, slice 9 "Templates B" (tasks 9.1 to 9.5)
+
+Split a/b. 9a: `feat/bouquet-editor-09a-wild-long-stems` (base `feat/bouquet-editor-08-templates-a`), 296 lines, Wild and Long stems. 9b: `feat/bouquet-editor-09-templates-b` (base 9a), Cascade, registry, distinctness, this record. PR numbers in the PR bodies. 5/5 tasks of Group 9 complete (Groups 10 to 27 pending). Tests: 370 passing (322 before, 48 new).
+
+- RED: `templates-b.test.ts` failed on unresolved template and registry imports (no tests ran), once per unit. GREEN: 28/28 then 48/48.
+- Design held: all anchors stay inside the D4 envelopes for all 1891 splits of 1 to 60 items; Long stems default extremes x 186, y -645; Cascade default lowest anchor y 241.
+- Choices where the design is silent: the registry entry is exactly `CompositionTemplate` (`id`, `seed`, `defaultItems`, `generate`), with ids `round`, `compact`, `asymmetric`, `wild`, `long-stems`, `cascade`, seeds 1 to 6; the design has no name or description fields, so the UI derives dictionary keys from `id` in slice 11. Wild shuffles flowers and foliage separately; Cascade dome scale uses factor 1 and its flowers split by canonical order (largest first in the dome).
+- Rollback: `src/domain/composition/{registry.ts,templates/wild.ts,longStems.ts,cascade.ts}`, `templates-b.test.ts`, the `COMPOSITIONS` export.
