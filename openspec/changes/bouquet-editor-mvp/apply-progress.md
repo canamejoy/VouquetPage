@@ -295,3 +295,14 @@ Single PR, `feat/bouquet-editor-23-summary` (base `feat/bouquet-editor-22-keyboa
 - Slice 24 places `<PreferenceSwitches />` in the header and `<SummaryContainer state={state} />` in the summary panel; slice 25 can read the total via `usePreferences()` plus `selectSummary` and `formatMoney`.
 - Unverified without a browser: panel layout and styling, and the 23.4 pins in the running UI (they hold under Node ICU in jsdom).
 - Rollback: `SummaryPanel*`, `SummaryContainer*`, `PreferenceSwitches*`, `PreferencesProvider*`.
+
+## Batch 24: Group 24, slice 24 "Header and app wiring" (tasks 24.1 to 24.3)
+
+Split a/b, stacked. 24a `feat/bouquet-editor-24a-header` (base `feat/bouquet-editor-23-summary`): `onGesturingChange` on the gesture hook and canvas container, `selectHasContent`, `Header`. 24b `feat/bouquet-editor-24-app-wiring` (base 24a): `App`, `useDraftEditor`, `readLocalStorage`, `main.tsx`, probe removed, this record. 3/3 tasks of Group 24 complete (Groups 25 to 27 pending). Tests: 768 passing (744 before, 24 new, 2 probe tests removed).
+
+- RED: Header, App and browserStorage tests failed on unresolved imports; gesture and selector tests failed on the missing behaviour. GREEN after implementation.
+- Deviations: no `providers.tsx` (it would only wrap `PreferencesProvider`); `useDraftEditor.ts` and `browserStorage.ts` added. App tests click with `fireEvent` because user-event hangs under vitest fake timers.
+- U5 default applied (pending user confirmation): New bouquet asks when the bouquet has any element or a wrapping, and is disabled when empty.
+- Gesture flag: `useTransformGesture(..., onGesturingChange?)`; `App` passes it to the toolbar as `gesturing`.
+- Unverified without a browser: rendered page, focus order, real pointer gestures, Header look (layout is slice 25).
+- Rollback: `src/app`, `Header*`, the `onGesturingChange` parameter, `selectHasContent`.

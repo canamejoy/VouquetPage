@@ -320,9 +320,9 @@ Traceability: summary-pricing (all four requirements); catalog (Sample price dis
 
 Traceability: bouquet-editor (Create and add items: New bouquet, New bouquet cancelled); draft-persistence (Autosave and restore); localization (Initial language and persistence).
 
-- [ ] 24.1 RED: `src/app/App.test.tsx`: draft restored on start, autosave after change, invalid draft starts empty, New bouquet confirm and cancel (wrapping-only bouquet confirms), language and currency persist across remount.
-- [ ] 24.2 GREEN: `src/app/App.tsx`, `src/app/providers.tsx`, `src/ui/organisms/Header/Header.tsx`, `src/main.tsx`.
-- [ ] 24.3 RED/GREEN: reducer initial state from `DraftStore.load()` and `parseBouquet`; `<html lang>` updated on switch.
+- [x] 24.1 RED: `src/app/App.test.tsx`: draft restored on start, autosave after change, invalid draft starts empty, New bouquet confirm and cancel (wrapping-only bouquet confirms), language and currency persist across remount.
+- [x] 24.2 GREEN: `src/app/App.tsx`, `src/app/providers.tsx`, `src/ui/organisms/Header/Header.tsx`, `src/main.tsx`.
+- [x] 24.3 RED/GREEN: reducer initial state from `DraftStore.load()` and `parseBouquet`; `<html lang>` updated on switch.
 
 ## Group 25: Responsive shell (PR 25)
 
