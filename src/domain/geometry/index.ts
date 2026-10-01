@@ -1,5 +1,5 @@
 export { normalizeAngle } from './angle';
-export { clampToBounds, MODEL_BOUNDS } from './point';
+export { clamp, clampToBounds, MODEL_BOUNDS } from './point';
 export type { Bounds, Point } from './point';
 export { clientToModel, modelPerPixel } from './viewport';
 export type { Viewport } from './viewport';
