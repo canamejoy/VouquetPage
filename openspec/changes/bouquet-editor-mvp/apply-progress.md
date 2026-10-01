@@ -211,3 +211,11 @@ Single PR: `feat/bouquet-editor-14-foliage-art` (base `feat/bouquet-editor-13c-f
 - RED: `foliage.test.tsx` and `foliage/paths.test.ts` failed on unresolved imports (no tests ran). GREEN: 6/6 paths tests, 22/22 foliage tests after tuning leaf sizes until the size-bound test passed.
 - Art was iterated by rasterizing in a scratch folder outside the repository; nothing from it is committed.
 - Rollback: `src/ui/illustrations/foliage*`, `svg.testutil.tsx` (and the import edit in `flowers.test.tsx`); the carnation fix is its own commit.
+
+## Batch 15: Group 15, slice 15 "Wrapping art" (tasks 15.1 to 15.3)
+
+Single PR: `feat/bouquet-editor-15-wrapping-art` (base `feat/bouquet-editor-14-foliage-art`). 5 wrappings with `Back` and `Front` components, `wrappingIllustrations: Record<WrappingId, { Back, Front }>`, and `illustrationRegistry: Record<CatalogId, ComponentType | WrappingIllustration>` in `src/ui/illustrations/registry.ts`. 3/3 tasks of Group 15 complete (Groups 16 to 27 pending). Tests: 534 passing (506 before, 28 new).
+
+- RED: `wrappings.test.tsx` and `registry.test.ts` failed on unresolved imports (no tests ran). GREEN: all pass after the first implementation; art then iterated with a scratch resvg render (not committed).
+- Geometry (canvas space, origin at binding point): back sheet x -340..340, y -565..275; front panels x -290..290, y -345..275 with the tie at y -60..100. Wrappings have no catalog `size`, so tests bound them by `MODEL_BOUNDS`.
+- Rollback: `src/ui/illustrations/wrappings*`, `registry*`.

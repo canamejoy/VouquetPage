@@ -239,9 +239,9 @@ Traceability: catalog (Catalog size and categories: five foliage).
 
 Traceability: catalog (Catalog size and categories: five wrappings); bouquet-model (wrapping as field).
 
-- [ ] 15.1 RED: `src/ui/illustrations/wrappings.test.tsx`: each exports `Back` and `Front`.
-- [ ] 15.2 GREEN: `src/ui/illustrations/wrappings/{Kraft,Ivory,Blush,Charcoal,Burlap}.tsx` and `index.ts` as `Record<WrappingId, ...>`.
-- [ ] 15.3 RED/GREEN: `src/ui/illustrations/registry.ts` (`illustrationRegistry: Record<CatalogId, ...>`) and a test that every catalog id resolves.
+- [x] 15.1 RED: `src/ui/illustrations/wrappings.test.tsx`: each exports `Back` and `Front`.
+- [x] 15.2 GREEN: `src/ui/illustrations/wrappings/{Kraft,Ivory,Blush,Charcoal,Burlap}.tsx` and `index.ts` as `Record<WrappingId, ...>`.
+- [x] 15.3 RED/GREEN: `src/ui/illustrations/registry.ts` (`illustrationRegistry: Record<CatalogId, ...>`) and a test that every catalog id resolves.
 
 ## Group 16: Tokens and atoms (PR 16)
 
