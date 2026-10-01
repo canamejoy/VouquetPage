@@ -1,7 +1,8 @@
 import { en, type TranslationKey } from './en';
 import { es } from './es';
+import type { Language } from '@/application/preferences/ports';
 
-export type Language = 'es' | 'en';
+export type { Language };
 export type TranslateParams = Readonly<Record<string, string | number>>;
 export type Translate = (key: TranslationKey, params?: TranslateParams) => string;
 

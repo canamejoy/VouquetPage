@@ -214,9 +214,9 @@ Traceability: draft-persistence (Autosave and restore, Safe handling of invalid 
 
 - [x] 12.1 RED: `src/infrastructure/local-storage/draftStore.test.ts` with fake `Storage`: save, load, corrupt JSON, unknown version, over 60, throwing storage, full storage; invalid data removes the key.
 - [x] 12.2 GREEN: `src/application/draft/ports.ts`, `src/infrastructure/local-storage/draftStore.ts`.
-- [ ] 12.3 RED/GREEN: `src/application/preferences/ports.ts`, `src/infrastructure/local-storage/preferencesStore.ts` (`vouquet:prefs:v1`, language and currency, default COP).
-- [ ] 12.4 RED/GREEN: debounced autosave 400 ms, flush on `visibilitychange` hidden and `pagehide` in `src/application/draft/autosave.ts` (fake timers).
-- [ ] 12.5 Write `docs/adr/0008-draft-persistence.md`.
+- [x] 12.3 RED/GREEN: `src/application/preferences/ports.ts`, `src/infrastructure/local-storage/preferencesStore.ts` (`vouquet:prefs:v1`, language and currency, default COP).
+- [x] 12.4 RED/GREEN: debounced autosave 400 ms, flush on `visibilitychange` hidden and `pagehide` in `src/application/draft/autosave.ts` (fake timers).
+- [x] 12.5 Write `docs/adr/0008-draft-persistence.md`.
 
 ## Group 13: Flower illustrations (PR 13)
 

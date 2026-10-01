@@ -1,6 +1,7 @@
+import type { Currency } from '@/application/preferences/ports';
 import type { Language } from './translate';
 
-export type Currency = 'COP' | 'USD';
+export type { Currency };
 
 const LOCALES: Record<Language, string> = { es: 'es-CO', en: 'en-US' };
 const FRACTION_DIGITS: Record<Currency, number> = { COP: 0, USD: 2 };
