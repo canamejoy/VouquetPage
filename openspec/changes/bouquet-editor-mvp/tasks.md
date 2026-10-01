@@ -232,8 +232,8 @@ Traceability: catalog (Catalog size and categories: eight flowers; Per-flower co
 
 Traceability: catalog (Catalog size and categories: five foliage).
 
-- [ ] 14.1 RED: `src/ui/illustrations/foliage.test.tsx` (same shape and count assertions).
-- [ ] 14.2 GREEN: `src/ui/illustrations/foliage/{Eucalyptus,Ruscus,Fern,Olive,DustyMiller}.tsx` and `index.ts` as `Record<FoliageId, ...>`.
+- [x] 14.1 RED: `src/ui/illustrations/foliage.test.tsx` (same shape and count assertions).
+- [x] 14.2 GREEN: `src/ui/illustrations/foliage/{Eucalyptus,Ruscus,Fern,Olive,DustyMiller}.tsx` and `index.ts` as `Record<FoliageId, ...>`.
 
 ## Group 15: Wrapping illustrations and registry (PR 15)
 

@@ -203,3 +203,11 @@ Split a/b. 13a: `feat/bouquet-editor-13a-flower-paths` (base `feat/bouquet-edito
 - Rollback 13b: `src/ui/illustrations/flowers*`, ADR 0003.
 
 Refinement 13c (`feat/bouquet-editor-13c-flower-refine`, base 13): rose, peony, carnation and lily redrawn after art review (distinct overlapping petals, soft per-petal shading instead of dark rims). New builders `ruffle` and `fringedRing` (RED observed: `not a function`); carnation shape bound raised to 14. Tests: 484 passing.
+
+## Batch 14: Group 14, slice 14 "Foliage art" (tasks 14.1, 14.2) plus carnation carry-over
+
+Single PR: `feat/bouquet-editor-14-foliage-art` (base `feat/bouquet-editor-13c-flower-refine`). 5 foliage illustrations, `foliageIllustrations: Record<FoliageId, ComponentType>`, `foliage/paths.ts` (`leaf`, `rib`, `pinnate`), shared test helpers in `svg.testutil.tsx`, and a white-carnation fix (soft tier shading instead of thin rims). 2/2 tasks of Group 14 complete (Groups 15 to 27 pending). Tests: 506 passing (484 before, 22 new).
+
+- RED: `foliage.test.tsx` and `foliage/paths.test.ts` failed on unresolved imports (no tests ran). GREEN: 6/6 paths tests, 22/22 foliage tests after tuning leaf sizes until the size-bound test passed.
+- Art was iterated by rasterizing in a scratch folder outside the repository; nothing from it is committed.
+- Rollback: `src/ui/illustrations/foliage*`, `svg.testutil.tsx` (and the import edit in `flowers.test.tsx`); the carnation fix is its own commit.
