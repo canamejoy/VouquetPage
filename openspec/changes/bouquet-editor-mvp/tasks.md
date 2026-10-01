@@ -222,11 +222,11 @@ Traceability: draft-persistence (Autosave and restore, Safe handling of invalid 
 
 Traceability: catalog (Catalog size and categories: eight flowers; Per-flower color availability rendering).
 
-- [ ] 13.1 RED: `src/ui/illustrations/flowers.test.tsx`: each flower renders a `<g>`, at most about 12 shapes, recolourable use `currentColor`, fixed ones hard-coded fill.
-- [ ] 13.2 GREEN: `src/ui/illustrations/flowers/{Rose,Tulip,Peony,Carnation}.tsx`.
-- [ ] 13.3 GREEN: `src/ui/illustrations/flowers/{Gerbera,Lily,Sunflower,Lavender}.tsx`.
-- [ ] 13.4 GREEN: `src/ui/illustrations/flowers/index.ts` as `Record<FlowerId, ...>` (compile-time completeness).
-- [ ] 13.5 Write `docs/adr/0003-catalog-and-illustrations.md`.
+- [x] 13.1 RED: `src/ui/illustrations/flowers.test.tsx`: each flower renders a `<g>`, at most about 12 shapes, recolourable use `currentColor`, fixed ones hard-coded fill.
+- [x] 13.2 GREEN: `src/ui/illustrations/flowers/{Rose,Tulip,Peony,Carnation}.tsx`.
+- [x] 13.3 GREEN: `src/ui/illustrations/flowers/{Gerbera,Lily,Sunflower,Lavender}.tsx`.
+- [x] 13.4 GREEN: `src/ui/illustrations/flowers/index.ts` as `Record<FlowerId, ...>` (compile-time completeness).
+- [x] 13.5 Write `docs/adr/0003-catalog-and-illustrations.md`.
 
 ## Group 14: Foliage illustrations (PR 14)
 

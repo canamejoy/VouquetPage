@@ -193,3 +193,11 @@ Split a/b. 12a: `feat/bouquet-editor-12a-draft-autosave` (base `feat/bouquet-edi
 - Design adjusted: `DraftStore.load()` returns `Bouquet | null` (the store runs `parseBouquet` and removes invalid data), not `unknown`. `Language` and `Currency` moved to `application/preferences/ports.ts` (ui re-exports them). Keys `vouquet:draft:v1` and `vouquet:prefs:v1` (`{ language, currency }`).
 - `createDraftAutosave(store)` returns `{ schedule, flush, dispose }`; no React in this slice.
 - Rollback 12b: `src/application/preferences`, `preferencesStore*`, ADR 0008, the two re-export edits in `src/ui/i18n`.
+
+## Batch 13: Group 13, slice 13 "Flower art" (tasks 13.1 to 13.5)
+
+Split a/b. 13a: `feat/bouquet-editor-13a-flower-paths` (base `feat/bouquet-editor-12-persistence`), path builders and tests. 13b: `feat/bouquet-editor-13-flower-art` (base 13a), 8 flowers, registry, ADR 0003, this record. PR numbers in the PR bodies. 5/5 tasks of Group 13 complete (Groups 14 to 27 pending). Tests: 482 passing (452 before, 30 new).
+
+- RED: `flowers.test.tsx` failed on an unresolved registry import (no tests ran); `paths.test.ts` was written after `paths.ts` (builders were extracted from the first drawing), so it has no observed RED. GREEN: 25/25 and 5/5.
+- Drawn art was rasterized with a throwaway resvg script (not committed) and looked at; recolour technique is `currentColor` plus black/white translucent overlays (`flowers/paint.ts`). Registry: `flowerIllustrations: Record<FlowerId, ComponentType>`.
+- Rollback 13b: `src/ui/illustrations/flowers*`, ADR 0003.
