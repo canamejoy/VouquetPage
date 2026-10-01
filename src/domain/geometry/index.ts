@@ -6,3 +6,5 @@ export { clientToModel, dropPosition, modelPerPixel } from './viewport';
 export type { Viewport } from './viewport';
 export { moveGesture, rotateGesture, scaleGesture, SCALE_MAX, SCALE_MIN } from './gestures';
 export type { GestureStart } from './gestures';
+export { dockSide } from './dockSide';
+export type { DockSide } from './dockSide';
