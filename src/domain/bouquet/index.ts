@@ -11,6 +11,7 @@ export {
   transformElement,
 } from './operations';
 export type { ElementTransform, ReorderDirection } from './operations';
+export { parseBouquet } from './parse';
 export { elementQuantities } from './quantities';
 export type { ElementQuantity } from './quantities';
 export { emptyBouquet } from './types';
