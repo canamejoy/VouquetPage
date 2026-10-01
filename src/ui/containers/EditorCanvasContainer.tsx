@@ -4,6 +4,8 @@ import type { EditorState } from '@/application/editor/state';
 import { CATALOG } from '@/domain/catalog';
 import { modelPerPixel } from '@/domain/geometry';
 import { EditorCanvas } from '@/ui/organisms/EditorCanvas/EditorCanvas';
+import { LiveRegion } from '@/ui/molecules/LiveRegion';
+import { useEditorShortcuts } from './keyboard/useEditorShortcuts';
 import { useTransformGesture } from './useTransformGesture';
 
 interface EditorCanvasContainerProps {
@@ -22,6 +24,7 @@ export function EditorCanvasContainer({ state, dispatch, svgRef }: EditorCanvasC
   svgRef ??= ownRef;
   const [scale, setScale] = useState(FALLBACK_MODEL_PER_PIXEL);
   const handlers = useTransformGesture(state, dispatch, svgRef);
+  const { message, ...keyboard } = useEditorShortcuts(state, dispatch, svgRef);
 
   useLayoutEffect(() => {
     const svg = svgRef.current;
@@ -37,13 +40,17 @@ export function EditorCanvasContainer({ state, dispatch, svgRef }: EditorCanvasC
   }, []);
 
   return (
-    <EditorCanvas
-      ref={svgRef}
-      bouquet={state.bouquet}
-      catalog={CATALOG}
-      selectedId={state.selectedId}
-      modelPerPixel={scale}
-      {...handlers}
-    />
+    <>
+      <EditorCanvas
+        ref={svgRef}
+        bouquet={state.bouquet}
+        catalog={CATALOG}
+        selectedId={state.selectedId}
+        modelPerPixel={scale}
+        {...handlers}
+        {...keyboard}
+      />
+      <LiveRegion message={message} />
+    </>
   );
 }

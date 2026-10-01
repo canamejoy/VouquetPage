@@ -83,6 +83,13 @@ export const es = {
   'toolbar.delete': 'Eliminar',
   'toolbar.colors': 'Color',
 
+  'announce.moved': 'Se movió {item} a {x}, {y}',
+  'announce.rotated': 'Se giró {item} a {degrees} grados',
+  'announce.resized': 'Se cambió el tamaño de {item} a {percent} por ciento',
+  'announce.layer': 'Se movió {item} a la capa {position} de {count}',
+  'announce.duplicated': 'Se duplicó {item}',
+  'announce.deleted': 'Se eliminó {item}',
+
   'summary.title': 'Resumen',
   'summary.empty': 'Tu ramo está vacío.',
   'summary.group.flowers': 'Flores',

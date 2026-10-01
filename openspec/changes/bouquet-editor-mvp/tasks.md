@@ -303,9 +303,9 @@ Traceability: bouquet-editor (Selection and transforms: Delete; Keyboard access:
 
 Traceability: bouquet-editor (Keyboard access); design D9 extras.
 
-- [ ] 22.1 RED: `src/ui/containers/useEditorShortcuts.test.tsx`: arrows 10 and Shift 50, `R`, `+`, `-`, `[`, `]`, Shift variants, `Delete`, Ctrl/Cmd+D, `Escape`.
-- [ ] 22.2 GREEN: `src/ui/containers/useEditorShortcuts.ts`; focus selects the element.
-- [ ] 22.3 RED/GREEN: polite live region in `src/ui/molecules/LiveRegion.tsx` and `prefers-reduced-motion` styles.
+- [x] 22.1 RED: `src/ui/containers/useEditorShortcuts.test.tsx`: arrows 10 and Shift 50, `R`, `+`, `-`, `[`, `]`, Shift variants, `Delete`, Ctrl/Cmd+D, `Escape`.
+- [x] 22.2 GREEN: `src/ui/containers/useEditorShortcuts.ts`; focus selects the element.
+- [x] 22.3 RED/GREEN: polite live region in `src/ui/molecules/LiveRegion.tsx` and `prefers-reduced-motion` styles.
 
 ## Group 23: Summary and switches (PR 23)
 
