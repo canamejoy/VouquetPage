@@ -18,4 +18,8 @@ export const selectLayerPosition = (
 export const selectCanAdd = (state: EditorState): boolean =>
   state.bouquet.elements.length < MAX_ELEMENTS;
 
+/** Whether "New bouquet" would discard anything: `bouquet/clear` also resets the wrapping. */
+export const selectHasContent = (state: EditorState): boolean =>
+  state.bouquet.elements.length > 0 || state.bouquet.wrappingId !== null;
+
 export const selectSummary = (state: EditorState): Summary => summarize(state.bouquet);

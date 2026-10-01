@@ -44,13 +44,17 @@ const pointer = (model: { x: number; y: number }, pointerId = 1) => ({
 
 let dispatch: ReturnType<typeof vi.fn<(action: EditorAction) => void>>;
 
+let onGesturingChange: ReturnType<typeof vi.fn<(gesturing: boolean) => void>>;
+
 function setup(selectedId: string | null = null) {
   dispatch = vi.fn<(action: EditorAction) => void>();
+  onGesturingChange = vi.fn<(gesturing: boolean) => void>();
   render(
     <I18nContext value={createTranslate('en')}>
       <EditorCanvasContainer
         state={{ ...initialEditorState(bouquet), selectedId }}
         dispatch={dispatch}
+        onGesturingChange={onGesturingChange}
       />
     </I18nContext>,
   );
@@ -149,6 +153,34 @@ describe('move', () => {
     fireEvent.pointerMove(svg, pointer({ x: -100, y: -400 }, 1));
     expect(transforms()).toHaveLength(1);
     expect(transforms()[0]).toMatchObject({ id: 'a' });
+  });
+});
+
+describe('gesture flag', () => {
+  it.each(['pointerUp', 'pointerCancel'] as const)(
+    'reports a gesture from the press until %s',
+    (end) => {
+      const svg = setup();
+      fireEvent.pointerDown(
+        screen.getByRole('button', { name: /rose/i }),
+        pointer({ x: -120, y: -400 }),
+      );
+      expect(onGesturingChange.mock.calls).toEqual([[true]]);
+      fireEvent[end](svg, pointer({ x: -120, y: -400 }));
+      expect(onGesturingChange.mock.calls).toEqual([[true], [false]]);
+    },
+  );
+
+  it('does not report a press on the background or a second pointer', () => {
+    const svg = setup('a');
+    fireEvent.pointerDown(svg, pointer({ x: 0, y: 0 }));
+    expect(onGesturingChange).not.toHaveBeenCalled();
+    fireEvent.pointerDown(
+      screen.getByRole('button', { name: /rose/i }),
+      pointer({ x: -120, y: -400 }, 1),
+    );
+    fireEvent.pointerUp(svg, pointer({ x: 0, y: 0 }, 2));
+    expect(onGesturingChange.mock.calls).toEqual([[true]]);
   });
 });
 

@@ -33,6 +33,8 @@ export function useTransformGesture(
   state: EditorState,
   dispatch: Dispatch<EditorAction>,
   svgRef: RefObject<SVGSVGElement | null>,
+  /** Called with true when a gesture starts and false when it ends, for the toolbar lock. */
+  onGesturingChange?: (gesturing: boolean) => void,
 ) {
   const gesture = useRef<Gesture | null>(null);
 
@@ -53,6 +55,7 @@ export function useTransformGesture(
       start: { pointer, position, rotation, scale },
       viewport,
     };
+    onGesturingChange?.(true);
   };
 
   const transformFor = (g: Gesture, pointer: Point): EditorAction => ({
@@ -70,6 +73,7 @@ export function useTransformGesture(
     if (gesture.current?.pointerId !== event.pointerId) return;
     svgRef.current?.releasePointerCapture(event.pointerId);
     gesture.current = null;
+    onGesturingChange?.(false);
   };
 
   return {

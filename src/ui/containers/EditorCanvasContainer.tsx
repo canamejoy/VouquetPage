@@ -13,17 +13,24 @@ interface EditorCanvasContainerProps {
   dispatch: Dispatch<EditorAction>;
   /** Pass the ref the palette drag reads; the canvas owns one when omitted. */
   svgRef?: RefObject<SVGSVGElement | null>;
+  /** Lets the page lock the selection toolbar while a pointer gesture runs. */
+  onGesturingChange?: (gesturing: boolean) => void;
 }
 
 // Before the first measurement, and where ResizeObserver is missing (jsdom), assume 1 px per unit.
 const FALLBACK_MODEL_PER_PIXEL = 1;
 
 /** Connects editor state to the presentational canvas and owns the pointer gestures. */
-export function EditorCanvasContainer({ state, dispatch, svgRef }: EditorCanvasContainerProps) {
+export function EditorCanvasContainer({
+  state,
+  dispatch,
+  svgRef,
+  onGesturingChange,
+}: EditorCanvasContainerProps) {
   const ownRef = useRef<SVGSVGElement>(null);
   svgRef ??= ownRef;
   const [scale, setScale] = useState(FALLBACK_MODEL_PER_PIXEL);
-  const handlers = useTransformGesture(state, dispatch, svgRef);
+  const handlers = useTransformGesture(state, dispatch, svgRef, onGesturingChange);
   const { message, ...keyboard } = useEditorShortcuts(state, dispatch, svgRef);
 
   useLayoutEffect(() => {
