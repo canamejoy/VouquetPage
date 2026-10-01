@@ -285,3 +285,13 @@ Split a/b, stacked. 22a `feat/bouquet-editor-22a-shortcut-map` (base `feat/bouqu
 - `prefers-reduced-motion` is already handled by the `--motion-duration` token; the new code adds no motion.
 - Unverified without a browser or assistive technology: real screen-reader output, OS or browser shortcut conflicts, focus ring look.
 - Rollback: `src/ui/containers/keyboard`, `LiveRegion*`, the canvas key and focus props, `announce.*` keys.
+
+## Batch 23: Group 23, slice 23 "Summary and switches" (tasks 23.1 to 23.4)
+
+Single PR, `feat/bouquet-editor-23-summary` (base `feat/bouquet-editor-22-keyboard`); PR number in the PR body. Two commits: the `SummaryPanel` organism, then `PreferencesProvider`, `PreferenceSwitches`, `SummaryContainer`. 4/4 tasks of Group 23 complete (Groups 24 to 27 pending). Tests: 744 passing (726 before, 18 new).
+
+- RED: both new test files failed on unresolved imports (no tests ran); GREEN after implementation. Test-side catch: Testing Library normalizes non-breaking spaces in received text, so expectations use plain spaces.
+- Deviation: `PreferencesProvider` lives in `src/ui/containers/`, not `src/application/preferences/`, because it calls `resolveInitialLanguage` from `ui/i18n` and application may import domain only. It also mounts `I18nProvider`, so slice 24 mounts one provider: `<PreferencesProvider store={...}>`.
+- Slice 24 places `<PreferenceSwitches />` in the header and `<SummaryContainer state={state} />` in the summary panel; slice 25 can read the total via `usePreferences()` plus `selectSummary` and `formatMoney`.
+- Unverified without a browser: panel layout and styling, and the 23.4 pins in the running UI (they hold under Node ICU in jsdom).
+- Rollback: `SummaryPanel*`, `SummaryContainer*`, `PreferenceSwitches*`, `PreferencesProvider*`.
