@@ -167,3 +167,11 @@ Split a/b. 9a: `feat/bouquet-editor-09a-wild-long-stems` (base `feat/bouquet-edi
 - Design held: all anchors stay inside the D4 envelopes for all 1891 splits of 1 to 60 items; Long stems default extremes x 186, y -645; Cascade default lowest anchor y 241.
 - Choices where the design is silent: the registry entry is exactly `CompositionTemplate` (`id`, `seed`, `defaultItems`, `generate`), with ids `round`, `compact`, `asymmetric`, `wild`, `long-stems`, `cascade`, seeds 1 to 6; the design has no name or description fields, so the UI derives dictionary keys from `id` in slice 11. Wild shuffles flowers and foliage separately; Cascade dome scale uses factor 1 and its flowers split by canonical order (largest first in the dome).
 - Rollback: `src/domain/composition/{registry.ts,templates/wild.ts,longStems.ts,cascade.ts}`, `templates-b.test.ts`, the `COMPOSITIONS` export.
+
+## Batch 10: Group 10, slice 10 "Editor reducer" (tasks 10.1 to 10.5)
+
+Split a/b. 10a: `feat/bouquet-editor-10a-reducer` (base `feat/bouquet-editor-09-templates-b`), 353 lines, state, actions, reducer. 10b: `feat/bouquet-editor-10-reducer` (base 10a), selectors, ADR 0005, this record. PR numbers in the PR bodies. 5/5 tasks of Group 10 complete (Groups 11 to 27 pending). Tests: 406 passing (370 before, 36 new).
+
+- RED: `reducer.test.ts` and `selectors.test.ts` each failed on an unresolved import (no tests ran), once per unit. GREEN: 32/32 then 36/36 in `src/application/editor`.
+- Choices where the design is silent: `composition/apply` carries `compositionId` (unknown id is a no-op); `element/select` with an unknown id is a no-op; `bouquet/clear` on an empty, unselected state is a no-op; `initialEditorState(bouquet?)` is the initial state; `selectLayerPosition` returns `{ position (1-based from the back), count }` or null. No React in this slice (Context arrives with the UI).
+- Rollback: `src/application/editor`, `docs/adr/0005-state-and-layers.md`.
