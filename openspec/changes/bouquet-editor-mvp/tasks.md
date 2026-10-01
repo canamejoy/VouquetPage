@@ -311,10 +311,10 @@ Traceability: bouquet-editor (Keyboard access); design D9 extras.
 
 Traceability: summary-pricing (all four requirements); catalog (Sample price disclosure); localization (Two languages switch).
 
-- [ ] 23.1 RED: `src/ui/organisms/SummaryPanel/SummaryPanel.test.tsx`: groups, one "Estimated total" label (`summary.estimatedTotal`), sample-price notice (`summary.samplePricesNotice`), lines sum to total in USD.
-- [ ] 23.2 GREEN: `src/ui/organisms/SummaryPanel/SummaryPanel.tsx`, `src/ui/containers/SummaryContainer.tsx` (formats with `formatMoney`).
-- [ ] 23.3 RED/GREEN: currency and language switches with `PreferencesProvider` in `src/application/preferences/PreferencesProvider.tsx`; currency does not change the bouquet.
-- [ ] 23.4 Re-confirm `formatMoney` output strings in the running UI and update pins if the runtime differs.
+- [x] 23.1 RED: `src/ui/organisms/SummaryPanel/SummaryPanel.test.tsx`: groups, one "Estimated total" label (`summary.estimatedTotal`), sample-price notice (`summary.samplePricesNotice`), lines sum to total in USD.
+- [x] 23.2 GREEN: `src/ui/organisms/SummaryPanel/SummaryPanel.tsx`, `src/ui/containers/SummaryContainer.tsx` (formats with `formatMoney`).
+- [x] 23.3 RED/GREEN: currency and language switches with `PreferencesProvider` in `src/application/preferences/PreferencesProvider.tsx`; currency does not change the bouquet.
+- [x] 23.4 Re-confirm `formatMoney` output strings in the running UI and update pins if the runtime differs.
 
 ## Group 24: Header and app wiring (PR 24)
 
