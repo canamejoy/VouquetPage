@@ -5,6 +5,7 @@ import type { EditorAction } from './actions';
 import { editorReducer } from './reducer';
 import {
   selectCanAdd,
+  selectHasContent,
   selectLayerPosition,
   selectSelectedElement,
   selectSummary,
@@ -33,6 +34,16 @@ describe('selectCanAdd', () => {
     const almost = Array.from({ length: MAX_ELEMENTS - 1 }, () => add);
     expect(selectCanAdd(run(...almost))).toBe(true);
     expect(selectCanAdd(run(...almost, add))).toBe(false);
+  });
+});
+
+describe('selectHasContent', () => {
+  it.each([
+    ['an empty bouquet', [], false],
+    ['an element', [add], true],
+    ['a wrapping alone', [{ type: 'wrapping/set', wrappingId: 'kraft' }], true],
+  ] as const)('for %s is %s', (_name, actions, expected) => {
+    expect(selectHasContent(run(...actions))).toBe(expected);
   });
 });
 
