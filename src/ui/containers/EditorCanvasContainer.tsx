@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, type Dispatch } from 'react';
+import { useLayoutEffect, useRef, useState, type Dispatch, type RefObject } from 'react';
 import type { EditorAction } from '@/application/editor/actions';
 import type { EditorState } from '@/application/editor/state';
 import { CATALOG } from '@/domain/catalog';
@@ -9,14 +9,17 @@ import { useTransformGesture } from './useTransformGesture';
 interface EditorCanvasContainerProps {
   state: EditorState;
   dispatch: Dispatch<EditorAction>;
+  /** Pass the ref the palette drag reads; the canvas owns one when omitted. */
+  svgRef?: RefObject<SVGSVGElement | null>;
 }
 
 // Before the first measurement, and where ResizeObserver is missing (jsdom), assume 1 px per unit.
 const FALLBACK_MODEL_PER_PIXEL = 1;
 
 /** Connects editor state to the presentational canvas and owns the pointer gestures. */
-export function EditorCanvasContainer({ state, dispatch }: EditorCanvasContainerProps) {
-  const svgRef = useRef<SVGSVGElement>(null);
+export function EditorCanvasContainer({ state, dispatch, svgRef }: EditorCanvasContainerProps) {
+  const ownRef = useRef<SVGSVGElement>(null);
+  svgRef ??= ownRef;
   const [scale, setScale] = useState(FALLBACK_MODEL_PER_PIXEL);
   const handlers = useTransformGesture(state, dispatch, svgRef);
 

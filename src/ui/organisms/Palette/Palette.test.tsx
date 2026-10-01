@@ -25,6 +25,7 @@ function setup({
 }: Options = {}) {
   const handlers = {
     onAdd: vi.fn(),
+    onDragStart: vi.fn(),
     onSelectWrapping: vi.fn(),
     onApplyComposition: vi.fn(),
   };

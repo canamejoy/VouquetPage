@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from 'react';
+import { useId, type PointerEvent, type ReactNode } from 'react';
 import styles from './PaletteTile.module.css';
 
 interface PaletteTileProps {
@@ -12,6 +12,8 @@ interface PaletteTileProps {
   pressed?: boolean;
   disabled?: boolean;
   onClick: () => void;
+  /** Set for tiles that can be dragged out; they allow only vertical panning. */
+  onPointerDown?: (event: PointerEvent) => void;
 }
 
 export function PaletteTile({
@@ -22,17 +24,19 @@ export function PaletteTile({
   pressed,
   disabled,
   onClick,
+  onPointerDown,
 }: PaletteTileProps) {
   const descriptionId = useId();
   return (
     <>
       <button
         type="button"
-        className={styles.tile}
+        className={onPointerDown ? `${styles.tile} ${styles.draggable}` : styles.tile}
         aria-pressed={pressed}
         aria-describedby={description ? descriptionId : undefined}
         disabled={disabled}
         onClick={onClick}
+        onPointerDown={onPointerDown}
       >
         {thumbnail}
         <span className={styles.label}>{label}</span>
