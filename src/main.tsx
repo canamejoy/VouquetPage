@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Probe } from '@/ui/atoms/Probe';
+import '@/ui/styles/tokens.css';
+import '@/ui/styles/base.css';
 
 const container = document.getElementById('root');
 if (!container) {
