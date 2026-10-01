@@ -219,3 +219,12 @@ Single PR: `feat/bouquet-editor-15-wrapping-art` (base `feat/bouquet-editor-14-f
 - RED: `wrappings.test.tsx` and `registry.test.ts` failed on unresolved imports (no tests ran). GREEN: all pass after the first implementation; art then iterated with a scratch resvg render (not committed).
 - Geometry (canvas space, origin at binding point): back sheet x -340..340, y -565..275; front panels x -290..290, y -345..275 with the tie at y -60..100. Wrappings have no catalog `size`, so tests bound them by `MODEL_BOUNDS`.
 - Rollback: `src/ui/illustrations/wrappings*`, `registry*`.
+
+## Batch 16: Group 16, slice 16 "Tokens and atoms" (tasks 16.1 to 16.4)
+
+Split a/b. 16a: `feat/bouquet-editor-16a-tokens` (base `feat/bouquet-editor-15-wrapping-art`), 182 lines, `tokens.css`, `base.css`, contrast test, ADR 0011. 16b: `feat/bouquet-editor-16-tokens-atoms` (base 16a), `Button`, `IconButton`, `SegmentedSwitch`, `icons.tsx` (8 toolbar icons), this record. PR numbers in the PR bodies. 4/4 tasks of Group 16 complete (Groups 17 to 27 pending). Tests: 561 passing (534 before, 27 new).
+
+- RED: all new test files failed on unresolved imports (no tests ran). GREEN: 12 token tests, 3 Button, 5 IconButton, 3 SegmentedSwitch plus focus-order fixes in my own tests.
+- Deviation: design hairline `#E3DED6` is 1.21:1 on paper, so control borders use added `--color-border-control` `#857F77` (3.58 and 3.96); hairline stays decorative. `vite.config.ts` gains `css.include` for `tokens.css` so the contrast test can read it.
+- `Probe` left in place (tasks do not remove it); `main.tsx` now imports the two stylesheets. Follow-up for app wiring: remove Probe.
+- Rollback: `src/ui/styles`, `src/ui/atoms` (except Probe), ADR 0011, the `main.tsx` and `vite.config.ts` edits.
