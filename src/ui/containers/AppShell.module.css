@@ -1,0 +1,162 @@
+/* Below 1024 px: a column (header, summary disclosure, canvas, palette sheet). From 1024 px: three panels. */
+.shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(240px, 1fr) auto;
+  grid-template-areas:
+    'header'
+    'summary'
+    'canvas'
+    'palette';
+  height: 100dvh;
+}
+
+.shell > header {
+  grid-area: header;
+}
+
+.palette {
+  grid-area: palette;
+  max-height: 40dvh;
+  padding: var(--space-3);
+  overflow-y: auto;
+  border-top: 1px solid var(--color-hairline);
+}
+
+/* The canvas is stretched over the region, so the whole `meet` viewBox always fits it. */
+.canvas {
+  position: relative;
+  grid-area: canvas;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.canvas > svg {
+  position: absolute;
+  inset: 0;
+}
+
+/* The toolbar overlays the region edge its `data-side` names; the sheet is outside the region. */
+.canvas > [data-side] {
+  position: absolute;
+  inset-inline: var(--space-2);
+  margin-inline: auto;
+}
+
+.canvas > [data-side='bottom'] {
+  bottom: var(--space-2);
+}
+
+.canvas > [data-side='top'] {
+  top: var(--space-2);
+}
+
+.hint {
+  position: absolute;
+  inset-inline: var(--space-4);
+  top: var(--space-4);
+  margin: 0;
+  color: var(--color-muted);
+  text-align: center;
+  pointer-events: none;
+}
+
+.summary {
+  position: relative;
+  z-index: 2;
+  grid-area: summary;
+  border-bottom: 1px solid var(--color-hairline);
+  background: var(--color-surface);
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--size-target);
+  padding: 0 var(--space-4);
+  border: 0;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.chip strong {
+  margin-inline-start: auto;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.chip::after {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--color-muted);
+  border-bottom: 2px solid var(--color-muted);
+  content: '';
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--motion-duration);
+}
+
+.chip[aria-expanded='true']::after {
+  transform: translateY(2px) rotate(-135deg);
+}
+
+.body {
+  display: none;
+}
+
+/* The expanded summary floats over the top of the canvas; it is a disclosure, not a modal. */
+.body[data-expanded='true'] {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  display: block;
+  max-height: 35dvh;
+  padding: var(--space-4);
+  overflow-y: auto;
+  border-bottom: 1px solid var(--color-hairline);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-raised);
+}
+
+@media (min-width: 1024px) {
+  .shell {
+    grid-template-columns: 300px minmax(0, 1fr) 320px;
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas:
+      'header header header'
+      'palette canvas summary';
+  }
+
+  .palette {
+    max-height: none;
+    padding: var(--space-4);
+    border-top: 0;
+    border-right: 1px solid var(--color-hairline);
+  }
+
+  .summary {
+    z-index: auto;
+    overflow-y: auto;
+    border-bottom: 0;
+    border-left: 1px solid var(--color-hairline);
+  }
+
+  .chip {
+    display: none;
+  }
+
+  .body,
+  .body[data-expanded] {
+    position: static;
+    display: block;
+    max-height: none;
+    padding: var(--space-4);
+    border: 0;
+    box-shadow: none;
+  }
+}

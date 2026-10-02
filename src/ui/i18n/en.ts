@@ -71,6 +71,8 @@ export const en = {
   'color.orange': 'Orange',
 
   'canvas.label': 'Bouquet canvas',
+  'canvas.emptyHint':
+    'Choose a composition in the Compositions tab, or add a flower from the palette.',
   'canvas.elementLabel': '{item}, {color}, layer {position} of {count}',
   'canvas.elementLabelFixedColor': '{item}, layer {position} of {count}',
 
