@@ -316,3 +316,13 @@ Split a/b, stacked. 25a `feat/bouquet-editor-25a-app-shell` (base `feat/bouquet-
 - Tooling: headless Chrome ignores window widths under about 500 px, so narrow captures use an iframe of the exact width.
 - Unverified without a selection or a real touch device: toolbar docking (CSS reasoned only), touch scroll of the palette row (`touch-action: pan-x` below 1024 px).
 - Rollback: `AppShell*`, the `App` composition, the header, palette and picker media queries.
+
+## Batch 26: Group 26, slice 26 "Deployment and README" (tasks 26.1 to 26.7)
+
+Single PR, `feat/bouquet-editor-26-deployment` (base `feat/bouquet-editor-25-responsive`); PR number in the PR body. Two commits: deploy config with the hygiene test, then README, ADR 0010 and this record. 7/7 tasks of Group 26 complete (Group 27 pending). Tests: 783 passing (776 before, 7 new).
+
+- RED: the hygiene test failed on the missing `.env.local.example`; GREEN once it existed. Vite denies `?raw` imports of `.env*`, so the test reads the template with `node:fs` and a one-function ambient declaration (`src/test/node-fs.d.ts`) instead of adding `@types/node`.
+- Deviations: `not_found_handling: "single-page-application"` is set (the prompt and exploration say so; D11 omitted it). `wrangler` 4.146.0 installed.
+- Checked: `npm run build` then `npx wrangler deploy --dry-run` read 4 assets, no login, no upload. `deploy:local` with no `.env.local` fails at once (`node: .env.local: not found`, exit 9). Nothing was deployed.
+- Unverified, owned by the user (U2): dashboard flow, `.nvmrc` 24 on the Workers Builds image, default non-production deploy command, token permission sufficiency, real touch behaviour. Task 26.5 could not consult documentation; recorded as unverified.
+- Rollback: README, ADR 0010, `wrangler.jsonc`, `deploy:local`, `.env.local.example`, `repo-hygiene.test.ts`, `node-fs.d.ts`.
