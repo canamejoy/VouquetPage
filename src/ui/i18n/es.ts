@@ -69,6 +69,8 @@ export const es = {
   'color.orange': 'Naranja',
 
   'canvas.label': 'Lienzo del ramo',
+  'canvas.emptyHint':
+    'Elige una composición en la pestaña Composiciones o agrega una flor desde la paleta.',
   'canvas.elementLabel': '{item}, {color}, capa {position} de {count}',
   'canvas.elementLabelFixedColor': '{item}, capa {position} de {count}',
 
