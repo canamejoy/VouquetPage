@@ -1,6 +1,6 @@
 # ADR 0010: Cloudflare deployment
 
-Status: accepted (slice 26); dashboard behaviour not yet verified on the owner's account
+Status: accepted (slice 26); two facts checked against documentation on 2026-10-01 (slice 27); dashboard behaviour not yet verified on the owner's account
 
 ## Context
 
@@ -11,7 +11,7 @@ production, and keep every secret out of the repository (spec: deployment).
 ## Decision
 
 - **Workers static assets, built by Workers Builds** from the connected GitHub repository.
-  `wrangler.jsonc` declares the Worker `vouquet` (it must match the Worker name in the dashboard),
+  `wrangler.jsonc` declares the Worker `vouquet` (keep it equal to the Worker name in the dashboard),
   `assets.directory` `./dist` and `not_found_handling` `single-page-application`. There is no script,
   no binding, no route and no `account_id`.
 - **Tests gate deploys.** The Cloudflare build command is `npm run check`, so a type, lint or test
@@ -41,13 +41,20 @@ production, and keep every secret out of the repository (spec: deployment).
 - Connecting the repository is a one-time dashboard task for the owner; the README lists the steps.
 - Checked locally: `npm run build` followed by `npx wrangler deploy --dry-run` reads the four assets
   from `dist/` and exits without login or upload.
-- Not verified, because only the owner's account can confirm them: the dashboard flow, whether the
-  Workers Builds image accepts `.nvmrc` `24`, the default deploy command for non-production
-  branches, and whether the `Workers Scripts > Edit` token permission is sufficient for
-  `deploy:local`. The design asked for the first three to be checked against Cloudflare
-  documentation; no documentation was reachable in this slice, so they stay marked unverified.
+- Verified from Cloudflare documentation on 2026-10-01 (summarised page fetch, not account-tested):
+  the Workers Builds image defaults to Node.js 24.18.0, preinstalls 22.23.2 and 24.18.0 and selects
+  the version from `NODE_VERSION` or `.nvmrc` / `.node-version`, so `.nvmrc` `24` is supported
+  (https://developers.cloudflare.com/workers/ci-cd/builds/build-image/). The production deploy
+  command defaults to `npx wrangler deploy`; non-production branches run a Preview command
+  (default `npx wrangler preview`, which does not promote to production) when preview builds are
+  enabled, and the page does not say they are enabled by default; the build command is optional
+  (https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
+- Not verified, because only the owner's account can confirm them: the dashboard flow, whether
+  preview builds are enabled, whether the dashboard Worker name must equal `wrangler.jsonc`
+  `name` (the configuration page is silent), which install command the image runs, and whether the
+  `Workers Scripts > Edit` token permission is sufficient for `deploy:local`.
 - Design drift: D11 omitted `not_found_handling` because the app has no client routes; it is set
   anyway, following the exploration, so a reload on any path serves the app.
 - Rollback: redeploy a previous Worker version from the dashboard, or disconnect the build.
-- Sources: Cloudflare documentation for Workers Builds, build configuration and single-page-application
-  routing, as cited in the exploration (section 3.9).
+- Sources: the two documentation pages above, plus Cloudflare documentation for single-page-application
+  routing as cited in the exploration (section 3.9).

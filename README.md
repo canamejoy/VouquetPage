@@ -124,11 +124,11 @@ You do these steps once, in the Cloudflare dashboard. Nothing here was run for y
 
 1. Open **Workers & Pages**, then **Create**, then **Import a repository**.
 2. Authorize the Cloudflare GitHub app for **only `canamejoy/VouquetPage`** ("Only select repositories").
-3. Set the Worker name to **`vouquet`**. It must match `name` in `wrangler.jsonc`.
+3. Set the Worker name to **`vouquet`**, the same as `name` in `wrangler.jsonc` (whether a mismatch breaks the build is not documented; see [Not yet verified](#not-yet-verified)).
 4. Set the build command to **`npm run check`**.
 5. Keep the default deploy command (`npx wrangler deploy`).
 6. Set the production branch to **`main`**.
-7. Leave non-production branch builds enabled, and save.
+7. Leave non-production branch builds (preview builds) enabled, and save. Cloudflare runs the Preview command (default `npx wrangler preview`) on those branches; it creates or updates a Preview without promoting it to production.
 
 | Branch or event        | What happens                                                      |
 | ---------------------- | ----------------------------------------------------------------- |
@@ -170,12 +170,20 @@ dashboard, not in the repository.
 > can read it. Never give a secret a `VITE_` name. The hygiene test rejects `VITE_` keys in
 > `.env.local.example` and any unlisted `import.meta.env.VITE_*` read.
 
+## Verification status
+
+Checked against Cloudflare documentation on 2026-10-01 (summarised page fetch, not tested on an account):
+
+- The Workers Builds image defaults to Node.js 24.18.0, preinstalls 22.23.2 and 24.18.0, and selects the version from `NODE_VERSION` or a `.nvmrc` / `.node-version` file, so the `.nvmrc` value `24` is supported ([build image](https://developers.cloudflare.com/workers/ci-cd/builds/build-image/)).
+- The production deploy command defaults to `npx wrangler deploy`. Non-production branches run a Preview command instead (default `npx wrangler preview`) when preview builds are enabled; the page does not say they are enabled by default. The build command is optional ([build configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)).
+
 ## Not yet verified
 
 These need you or a real environment; the project does not claim them.
 
 - [ ] The dashboard flow above on your account (it was written from Cloudflare's documentation and not run).
-- [ ] That the `.nvmrc` value (`24`) is accepted by the Workers Builds image.
-- [ ] The default deploy command used for non-production branches (the exploration recorded `npx wrangler preview` as the default; not re-checked against the dashboard).
+- [ ] Whether the Worker name in the dashboard must equal `name` in `wrangler.jsonc` (the configuration page does not say).
+- [ ] Which install command the Workers Builds image runs before `npm run check`.
+- [ ] That preview builds are enabled on your project, so non-production branches get a Preview.
 - [ ] That the token permission "Workers Scripts > Edit" is enough for `deploy:local`.
-- [ ] Touch behaviour on a real device (gestures, the palette sheet, the toolbar).
+- [ ] Touch behaviour on a real device (gestures, the palette sheet, the toolbar), and real mouse, pen and touch dragging of elements, handles and palette tiles: the scripted browser check cannot produce trusted pointer events.
