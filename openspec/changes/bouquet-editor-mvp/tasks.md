@@ -340,7 +340,7 @@ Traceability: deployment (Production build, Automatic deploy from main, Preview 
 - [x] 26.2 GREEN: `.env.local.example` (`CLOUDFLARE_API_TOKEN=`, `CLOUDFLARE_ACCOUNT_ID=`, one comment each); confirm `.gitignore`.
 - [x] 26.3 Create `wrangler.jsonc` (`name` "vouquet", `compatibility_date`, `assets.directory` "./dist"); add `wrangler` as a dev dependency and the `deploy:local` script.
 - [x] 26.4 Verify `deploy:local` invocation with `npx wrangler deploy --dry-run` (no credentials, no upload); confirm how `node --env-file=.env.local` is passed and record in the README.
-- [x] 26.5 Verify, from Cloudflare documentation, supported Node versions for `.nvmrc` (24 versus Workers Builds image) and the default non-production deploy command; record sources in `docs/adr/0010-cloudflare-deployment.md`. (Not verifiable in this slice: no documentation access; recorded as unverified in ADR 0010 and the README, left to U2.)
+- [x] 26.5 Verify, from Cloudflare documentation, supported Node versions for `.nvmrc` (24 versus Workers Builds image) and the default non-production deploy command; record sources in `docs/adr/0010-cloudflare-deployment.md`. (Slice 26 had no documentation access. Slice 27 recorded the result checked by the orchestrator on 2026-10-01 through a summarising fetch of two Cloudflare pages, build-image and build configuration: `.nvmrc` 24 is supported and the default non-production command is `npx wrangler preview`, run when preview builds are enabled. Not account-tested; the dashboard flow, Worker-name matching, the install command, preview-build enablement and token sufficiency remain for U2 and U3.)
 - [x] 26.6 Write full `README.md` per D12: layer map, model, how to add a catalog item or composition, dashboard steps, preview and production behaviour, credentials table (where each is stored), `.env.local` copy step, sample-price notice, ADR index.
 - [x] 26.7 Write `docs/adr/0010-cloudflare-deployment.md`.
 
@@ -348,11 +348,11 @@ Traceability: deployment (Production build, Automatic deploy from main, Preview 
 
 Traceability: deployment (Production build, Documented configuration); whole change.
 
-- [ ] 27.1 Run `npm ci && npm run check` from a clean tree: typecheck, lint, test, build green with no build errors.
-- [ ] 27.2 Serve the production build with `npx vite preview` and run the full flow: add, move, rotate, scale, recolour, composition apply, summary, reload restore.
-- [ ] 27.3 Confirm every required variable is documented in `README.md` and no secret exists in tracked files (hygiene test plus `git ls-files` review).
-- [ ] 27.4 Walk the spec scenario list (65) against passing tests; record any scenario covered only manually in the PR body.
-- [ ] 27.5 Update `README.md` and ADRs with any verification result that changed a stated default (Intl strings, `.nvmrc`, deploy command).
+- [x] 27.1 Run `npm ci && npm run check` from a clean tree: typecheck, lint, test, build green with no build errors.
+- [x] 27.2 Serve the production build and run the full flow: add, move, rotate, scale, recolour, composition apply, summary, reload restore. (Done against the production build in headless Chrome 153 through a scripted same-origin harness, served with `python3 -m http.server` rather than `vite preview`; move, rotate and scale were driven through the toolbar and keyboard. Real mouse, pen and touch dragging, and the drag handles, were NOT verified: untrusted scripted pointer events cannot do it; left to U4.)
+- [x] 27.3 Confirm every required variable is documented in `README.md` and no secret exists in tracked files (hygiene test plus `git ls-files` review).
+- [x] 27.4 Walk the spec scenario list (65) against passing tests; record any scenario covered only manually in the PR body. (65 walked: 61 have automated or harness evidence, 4 do not: Push to main, Feature branch, Setup docs (README reviewed by hand) and Single item (a MAY). Four more are automated in jsdom only for real dragging. Table in the PR 27 body.)
+- [x] 27.5 Update `README.md` and ADRs with any verification result that changed a stated default (Intl strings, `.nvmrc`, deploy command). (`.nvmrc` and deploy command recorded in README and ADR 0010; the real-browser Intl strings matched the pinned Node strings, recorded in ADR 0007; no default changed.)
 
 ### User actions (not agent tasks)
 

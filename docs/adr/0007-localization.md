@@ -36,4 +36,5 @@ The interface is available in Spanish and English, switchable at runtime. The de
 
 - No dependency is added. Adding a language means one new dictionary and one union member.
 - Output of `Intl` depends on the runtime's ICU data; the pinned strings fail visibly if it changes.
+- Checked in a real browser (Chrome 153, slice 27): the production build produced the same strings the tests pin under Node: `COP\u00a013,000` and `USD\u00a03.82` for English, `COP\u00a013.000` and `USD\u00a03,82` for Spanish, each with a non-breaking space after the code.
 - Persisting the language choice and the switch control arrive in later slices.
