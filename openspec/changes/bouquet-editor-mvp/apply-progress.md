@@ -326,3 +326,13 @@ Single PR, `feat/bouquet-editor-26-deployment` (base `feat/bouquet-editor-25-res
 - Checked: `npm run build` then `npx wrangler deploy --dry-run` read 4 assets, no login, no upload. `deploy:local` with no `.env.local` fails at once (`node: .env.local: not found`, exit 9). Nothing was deployed.
 - Unverified, owned by the user (U2): dashboard flow, `.nvmrc` 24 on the Workers Builds image, default non-production deploy command, token permission sufficiency, real touch behaviour. Task 26.5 could not consult documentation; recorded as unverified.
 - Rollback: README, ADR 0010, `wrangler.jsonc`, `deploy:local`, `.env.local.example`, `repo-hygiene.test.ts`, `node-fs.d.ts`.
+
+## Batch 27: Group 27, slice 27 "Final verification" (tasks 27.1 to 27.5)
+
+Single PR, `feat/bouquet-editor-27-verification` (base `feat/bouquet-editor-26-deployment`); PR number in the PR body. Documentation and task records only; no app defect found. 5/5 tasks of Group 27 complete; all implementation groups are done and U1 to U5 stay with the user. Tests: 783 passing (no new tests).
+
+- 27.1: `npm ci` then `npm run check` from a deleted `node_modules`: typecheck, lint, Prettier, 60 files and 783 tests, and the build all green; `git status --short` clean.
+- 27.2: scripted same-origin harness (throwaway, outside the repository) against the production build in headless Chrome 153: 25 PASS lines, 0 FAIL, at 1440, 1280 and 360 px. Real pointer and touch dragging is NOT verified (untrusted events cannot set pointer capture); left to U4.
+- 27.3: hygiene test 7/7; 237 tracked files reviewed, nothing that should be untracked; README documents both credentials and states the app needs no environment variables.
+- 27.4: 65 scenarios walked: 61 with automated or harness evidence, 4 without (Push to main, Feature branch, Setup docs, Single item). Table in the PR body.
+- 27.5: Cloudflare facts (checked 2026-10-01, documentation only) recorded in README and ADR 0010; real-browser `Intl` strings matched the pinned Node strings (ADR 0007); no default changed.
