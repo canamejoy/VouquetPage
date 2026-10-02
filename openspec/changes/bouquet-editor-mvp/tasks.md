@@ -336,13 +336,13 @@ Traceability: bouquet-editor (Responsive tool layout: Narrow viewport, Wide view
 
 Traceability: deployment (Production build, Automatic deploy from main, Preview separation, No committed secrets, Documented configuration). Agent tasks only; no secret enters the repository and nothing is deployed.
 
-- [ ] 26.1 RED: `src/test/repo-hygiene.test.ts`: `.env.local.example` lines are `KEY=` with empty values, no `VITE_` keys, no non-allowlisted `import.meta.env.VITE_*`, `.gitignore` ignores `.env.local`.
-- [ ] 26.2 GREEN: `.env.local.example` (`CLOUDFLARE_API_TOKEN=`, `CLOUDFLARE_ACCOUNT_ID=`, one comment each); confirm `.gitignore`.
-- [ ] 26.3 Create `wrangler.jsonc` (`name` "vouquet", `compatibility_date`, `assets.directory` "./dist"); add `wrangler` as a dev dependency and the `deploy:local` script.
-- [ ] 26.4 Verify `deploy:local` invocation with `npx wrangler deploy --dry-run` (no credentials, no upload); confirm how `node --env-file=.env.local` is passed and record in the README.
-- [ ] 26.5 Verify, from Cloudflare documentation, supported Node versions for `.nvmrc` (24 versus Workers Builds image) and the default non-production deploy command; record sources in `docs/adr/0010-cloudflare-deployment.md`.
-- [ ] 26.6 Write full `README.md` per D12: layer map, model, how to add a catalog item or composition, dashboard steps, preview and production behaviour, credentials table (where each is stored), `.env.local` copy step, sample-price notice, ADR index.
-- [ ] 26.7 Write `docs/adr/0010-cloudflare-deployment.md`.
+- [x] 26.1 RED: `src/test/repo-hygiene.test.ts`: `.env.local.example` lines are `KEY=` with empty values, no `VITE_` keys, no non-allowlisted `import.meta.env.VITE_*`, `.gitignore` ignores `.env.local`.
+- [x] 26.2 GREEN: `.env.local.example` (`CLOUDFLARE_API_TOKEN=`, `CLOUDFLARE_ACCOUNT_ID=`, one comment each); confirm `.gitignore`.
+- [x] 26.3 Create `wrangler.jsonc` (`name` "vouquet", `compatibility_date`, `assets.directory` "./dist"); add `wrangler` as a dev dependency and the `deploy:local` script.
+- [x] 26.4 Verify `deploy:local` invocation with `npx wrangler deploy --dry-run` (no credentials, no upload); confirm how `node --env-file=.env.local` is passed and record in the README.
+- [x] 26.5 Verify, from Cloudflare documentation, supported Node versions for `.nvmrc` (24 versus Workers Builds image) and the default non-production deploy command; record sources in `docs/adr/0010-cloudflare-deployment.md`. (Not verifiable in this slice: no documentation access; recorded as unverified in ADR 0010 and the README, left to U2.)
+- [x] 26.6 Write full `README.md` per D12: layer map, model, how to add a catalog item or composition, dashboard steps, preview and production behaviour, credentials table (where each is stored), `.env.local` copy step, sample-price notice, ADR index.
+- [x] 26.7 Write `docs/adr/0010-cloudflare-deployment.md`.
 
 ## Group 27: Final verification (PR 27)
 
