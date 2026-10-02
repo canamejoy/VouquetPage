@@ -306,3 +306,13 @@ Split a/b, stacked. 24a `feat/bouquet-editor-24a-header` (base `feat/bouquet-edi
 - Gesture flag: `useTransformGesture(..., onGesturingChange?)`; `App` passes it to the toolbar as `gesturing`.
 - Unverified without a browser: rendered page, focus order, real pointer gestures, Header look (layout is slice 25).
 - Rollback: `src/app`, `Header*`, the `onGesturingChange` parameter, `selectHasContent`.
+
+## Batch 25: Group 25, slice 25 "Responsive shell" (tasks 25.1 to 25.3)
+
+Split a/b, stacked. 25a `feat/bouquet-editor-25a-app-shell` (base `feat/bouquet-editor-24-app-wiring`): `AppShell` (grid, summary disclosure, empty-canvas hint), `App` wiring, `canvas.emptyHint` key. 25b `feat/bouquet-editor-25-responsive` (base 25a): header wrapping, palette bottom sheet CSS, this record. 3/3 tasks of Group 25 complete (Groups 26 to 27 pending). Tests: 776 passing (768 before, 8 new).
+
+- RED: `AppShell.test.tsx` failed on the unresolved import; GREEN after implementation. Layout is CSS only (no media query in JS) and verified with screenshots at 1440, 1024, 390 and 360 px.
+- Deviation: `AppShell` takes `state` plus slots and renders the landmarks and `SummaryContainer` itself. DOM order stays palette, canvas, summary; below 1024 px the grid areas reorder them visually (summary, canvas, palette).
+- Tooling: headless Chrome ignores window widths under about 500 px, so narrow captures use an iframe of the exact width.
+- Unverified without a selection or a real touch device: toolbar docking (CSS reasoned only), touch scroll of the palette row (`touch-action: pan-x` below 1024 px).
+- Rollback: `AppShell*`, the `App` composition, the header, palette and picker media queries.

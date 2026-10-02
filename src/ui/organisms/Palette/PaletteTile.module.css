@@ -60,3 +60,10 @@
 .draggable {
   touch-action: pan-y;
 }
+
+/* A sideways row scrolls horizontally, so a vertical drag toward the canvas is the one left to Pointer Events. */
+@media (max-width: 1023.98px) {
+  .draggable {
+    touch-action: pan-x;
+  }
+}
