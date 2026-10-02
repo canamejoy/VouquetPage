@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . && prettier --check .",
     "build": "tsc --noEmit && vite build",
-    "check": "npm run typecheck && npm run lint && npm test && npm run build"
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "deploy:local": "npm run check && node --env-file=.env.local node_modules/wrangler/bin/wrangler.js deploy"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -27,7 +28,8 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.71.0",
     "vite": "^8.3.1",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.3",
+    "wrangler": "^4.146.0"
   },
   "dependencies": {
     "react": "^19.3.0",
