@@ -35,3 +35,15 @@
   color: var(--color-muted);
   font-size: var(--font-size-small);
 }
+
+@media (max-width: 1023.98px) {
+  .list {
+    flex-direction: row;
+    padding-bottom: var(--space-1);
+    overflow-x: auto;
+  }
+
+  .card {
+    flex: 0 0 240px;
+  }
+}

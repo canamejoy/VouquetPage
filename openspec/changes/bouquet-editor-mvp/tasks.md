@@ -328,9 +328,9 @@ Traceability: bouquet-editor (Create and add items: New bouquet, New bouquet can
 
 Traceability: bouquet-editor (Responsive tool layout: Narrow viewport, Wide viewport).
 
-- [ ] 25.1 RED: `src/ui/containers/AppShell.test.tsx`: at least 1024 px shows palette, canvas, summary together; below it a column with summary disclosure chip, canvas, palette sheet; empty-canvas hint points to Compositions.
-- [ ] 25.2 GREEN: `src/ui/containers/AppShell.tsx`, `src/ui/containers/AppShell.module.css`.
-- [ ] 25.3 Verify stacking order (summary disclosure, toolbar, canvas) and no horizontal scroll at 360 px and 1280 px in `npm run dev`; record observation in the PR body.
+- [x] 25.1 RED: `src/ui/containers/AppShell.test.tsx`: at least 1024 px shows palette, canvas, summary together; below it a column with summary disclosure chip, canvas, palette sheet; empty-canvas hint points to Compositions.
+- [x] 25.2 GREEN: `src/ui/containers/AppShell.tsx`, `src/ui/containers/AppShell.module.css`.
+- [x] 25.3 Verify stacking order (summary disclosure, toolbar, canvas) and no horizontal scroll at 360 px and 1280 px in `npm run dev`; record observation in the PR body.
 
 ## Group 26: Deployment and documentation (PR 26)
 

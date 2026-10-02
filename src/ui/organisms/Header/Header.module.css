@@ -1,7 +1,9 @@
 .header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2) var(--space-3);
+  min-height: 56px;
   padding: var(--space-2) var(--space-3);
   border-bottom: 1px solid var(--color-hairline);
 }
@@ -11,8 +13,14 @@
   font-size: var(--font-size-heading);
 }
 
+.header button {
+  white-space: nowrap;
+}
+
+/* On a narrow screen the switches wrap onto their own row instead of being clipped. */
 .switches {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-2);
   margin-left: auto;
 }
